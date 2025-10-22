@@ -5,19 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Für dich ❤️</title>
 <style>
-body{margin:0;font-family:"Poppins",sans-serif;background:linear-gradient(to bottom right,#ffe6f0,#fff);overflow-x:hidden;}
-h1,h2,p{text-align:center;color:#d63384;}
-button{background:#ff6b9b;border:none;color:white;padding:10px 20px;border-radius:25px;cursor:pointer;transition:transform 0.3s;}
-button:hover{transform:scale(1.1);background:#ff85ad;}
-.heart{position:fixed;top:-10px;color:#ff5c8d;font-size:20px;animation:fall 5s linear infinite;z-index:999;}
-@keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
-.letter{background:#fff0f6;border:2px solid #ffb6c1;border-radius:15px;padding:20px;margin:40px auto;width:80%;max-width:400px;text-align:center;box-shadow:0 0 15px rgba(255,182,193,0.4);}
-#countdown{font-size:20px;margin-top:10px;color:#ff5c8d;}
-.game{text-align:center;margin:40px 0;position:relative;height:150px;}
-.gallery{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-.gallery img{width:120px;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,0.1);transition:transform 0.3s;}
-.gallery img:hover{transform:scale(1.1);}
-footer{text-align:center;padding:20px;color:#888;}
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to bottom right, #ffe6f0, #fff);
+  overflow-x: hidden;
+}
+h1, h2, p {text-align: center; color: #d63384;}
+button {
+  background: #ff6b9b; border: none; color: white;
+  padding: 10px 20px; border-radius: 25px; cursor: pointer;
+  transition: transform 0.3s;
+}
+button:hover {transform: scale(1.1); background: #ff85ad;}
+.letter {
+  background: #fff0f6; border: 2px solid #ffb6c1;
+  border-radius: 15px; padding: 20px; margin: 40px auto;
+  width: 80%; max-width: 400px; text-align: center;
+  box-shadow: 0 0 15px rgba(255,182,193,0.4);
+}
+.letter p {color: #333;}
+#countdown {font-size: 20px; margin-top: 10px; color: #ff5c8d;}
+.game {text-align: center; margin: 40px 0; position: relative; height: 150px;}
+.gallery {
+  display: flex; justify-content: center; align-items: center;
+  flex-wrap: wrap; gap: 15px; margin: 20px auto; max-width: 900px;
+}
+.gallery img {
+  width: 250px; border-radius: 15px; box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+.gallery img:hover {transform: scale(1.05);}
+footer {text-align: center; padding: 20px; color: #888;}
+.heart {
+  position: fixed; pointer-events: none; z-index: 9999;
+  opacity: 0.9; will-change: transform, opacity;
+}
+
+/* 💊 Erinnerung unten rechts */
+#pillReminder {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,182,193,0.7);
+  padding: 20px;
+  text-align: center;
+  z-index: 10000;
+  width: 250px;
+  animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+#pillCountdown {
+  font-size: 18px;
+  color: #d63384;
+  margin-top: 10px;
+}
+
+/* 📝 Notizen-Button + Panel */
+#notesButton {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #ff85ad;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  font-size: 16px;
+  z-index: 10000;
+  transition: background 0.3s, transform 0.2s;
+}
+#notesButton:hover {
+  background: #ff5c8d;
+  transform: scale(1.05);
+}
+#notesPanel {
+  position: fixed;
+  bottom: 70px;
+  left: 20px;
+  width: 280px;
+  height: 260px;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+#notesPanel.open {
+  display: flex;
+  animation: slideUp 0.3s ease-out;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+#notesPanel textarea {
+  flex: 1;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid #ffb6c1;
+  padding: 8px;
+  resize: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+#notesPanel h3 {
+  text-align: center;
+  color: #d63384;
+  margin-top: 10px;
+}
+
+/* Login/Register Panel */
+#authPanel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  padding: 15px;
+  z-index: 10001;
+  width: 250px;
+}
+#authPanel input {width: 100%; margin: 5px 0; padding: 5px; border-radius: 10px; border: 1px solid #ffb6c1;}
+#authPanel button {width: 100%; margin: 5px 0;}
+#logoutBtn {display:none; background:#d63384;}
 </style>
 </head>
 <body>
@@ -25,105 +148,233 @@ footer{text-align:center;padding:20px;color:#888;}
 <h1>💖 Für dich bububär 💖</h1>
 <p>Diese Seite ist für dich gemacht, weil ich dich ganz doll liebi 💞</p>
 
-<!-- 100 Gründe Brief -->
 <div class="letter" id="letterBox">
-<h2>💌 Klick, um einen Grund zu sehen, warum ich dich liebe</h2>
-<p id="letterText">Klick auf den Button, um einen Grund zu sehen!</p>
-<button id="showReasonBtn">Zeig mir einen Grund 💕</button>
+  <h2>💌 Klick, um einen Grund zu sehen, warum ich dich liebe</h2>
+  <p id="letterText">Klick auf den Button, um einen Grund zu sehen!</p>
+  <button id="showReasonBtn">Zeig mir einen Grund 💕</button>
 </div>
 
-<!-- Countdown -->
 <div style="text-align:center;">
-<h2>🗓️ Countdown bis wir uns sehi:</h2>
-<div id="countdown"></div>
+  <h2>🗓️ Countdown bis wir uns sehi:</h2>
+  <div id="countdown"></div>
 </div>
 
-<!-- Galerie -->
 <h2>📸 Leos und Mios besten Bilder</h2>
 <div class="gallery">
-<img src="https://i.imgur.com/m05eQGf.jpeg" alt="Lele 1">
-<img src="https://i.imgur.com/rp80WsN.jpeg" alt="Mimi 1">
-<img src="https://i.imgur.com/BIxd6ix.jpeg" alt="Lelelele 2">
+  <img src="https://i.imgur.com/m05eQGf.jpeg" alt="Lele 1">
+  <img src="https://i.imgur.com/rp80WsN.jpeg" alt="Mimi 1">
+  <img src="https://i.imgur.com/BIxd6ix.jpeg" alt="Lelelele 2">
 </div>
 
-<!-- Spiel -->
 <div class="game">
-<h2>Bin ich der allertollste Freund auf dieser welt? 💕</h2>
-<button id="yesBtn">Ja du geiler</button>
-<button id="noBtn">Nein!!!</button>
+  <h2>Bin ich der allertollste Freund auf dieser Welt? 💕</h2>
+  <button id="yesBtn">Ja du geiler</button>
+  <button id="noBtn">Nein!!!</button>
 </div>
 
-<footer><p>Mit Liebe gemacht von justini und chatgpt :c 💕</p></footer>
+<!-- 💊 Erinnerung -->
+<div id="pillReminder">
+  <h2 id="pillTitle">💊 Nimm die Pille ml!!!!</h2>
+  <div id="pillCountdown"></div>
+  <button id="pillTakenBtn">Hab genommi 😇</button>
+</div>
 
-<!-- Herzregen -->
-<script>
-window.addEventListener("DOMContentLoaded",function(){
-  function h(){
-    const e=document.createElement("div");
-    e.classList.add("heart");
-    e.style.left=Math.random()*100+"vw";
-    e.style.fontSize=Math.random()*20+10+"px";
-    e.innerText="💖";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),5000);
+<!-- 📝 Notizen -->
+<button id="notesButton">📝 Notizen</button>
+<div id="notesPanel">
+  <h3>Paladins Ideen 💡</h3>
+  <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..."></textarea>
+</div>
+
+<!-- Login/Register -->
+<div id="authPanel">
+  <input type="email" id="emailInput" placeholder="E-Mail">
+  <input type="password" id="passwordInput" placeholder="Passwort">
+  <button id="registerBtn">Registrieren</button>
+  <button id="loginBtn">Anmelden</button>
+  <button id="logoutBtn">Abmelden</button>
+</div>
+
+<footer><p>Mit Liebe gemacht von justini 💕</p></footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDJl-UVkVFCj-CfDiXcYBbVRoT9WpboXOs",
+  authDomain: "nathalie-notizen-webseite.firebaseapp.com",
+  projectId: "nathalie-notizen-webseite",
+  storageBucket: "nathalie-notizen-webseite.firebasestorage.app",
+  messagingSenderId: "627451220911",
+  appId: "1:627451220911:web:63357b6799f075bacfd55a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// 💖 Herzchen fliegen automatisch
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = "💖";
+  const size = Math.random() * 20 + 10;
+  heart.style.fontSize = size + "px";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.top = "-50px";
+  document.body.appendChild(heart);
+
+  const endY = window.innerHeight + 50;
+  const duration = Math.random() * 4000 + 4000;
+  let start = null;
+
+  function animateHeart(timestamp) {
+    if (!start) start = timestamp;
+    const progress = timestamp - start;
+    const fraction = progress / duration;
+    heart.style.transform = `translateY(${fraction * endY}px) rotate(${fraction * 360}deg)`;
+    heart.style.opacity = 1 - fraction;
+    if (fraction < 1) requestAnimationFrame(animateHeart);
+    else heart.remove();
   }
-  setInterval(h,300);
-});
-</script>
+  requestAnimationFrame(animateHeart);
+}
+setInterval(createHeart, 400);
 
-<!-- Countdown -->
-<script>
-window.addEventListener("DOMContentLoaded",function(){
-  const targetDate=new Date("2025-10-24T20:00:00");
-  const countdownEl=document.getElementById("countdown");
-  function updateCountdown(){
-    const now=new Date();
-    const diff=targetDate-now;
-    if(diff<=0){countdownEl.textContent="Sex time muhahahaha 💕"; return;}
-    const days=Math.floor(diff/(1000*60*60*24));
-    const hours=Math.floor((diff/(1000*60*60))%24);
-    const mins=Math.floor((diff/(1000*60))%60);
-    const secs=Math.floor((diff/1000)%60);
-    countdownEl.textContent=`${days} Tage, ${hours} Stunden, ${mins} Minuten, ${secs} Sekunden`;
+// 💌 Gründe
+const reasons = [
+  "Du bist die erste Person, die ich immer bei mir will.",
+  "Du bist das erste, an das ich morgens denke.",
+  "Du hast so lange auf mich gewartet <3.",
+  "Du bist so süß und lieb.",
+  "Du machst mich einfach glücklich.",
+  "Du bist der Grund, warum ich lächle.",
+  "Ich liebe deine Art zu lachen.",
+  "Ich freue mich jedes Mal, dich zu sehen.",
+  "Du bist wunderschön.",
+  "Ich bin so stolz, dass du meins bist.",
+  "Deine Augen sind so wunderschön."
+];
+document.getElementById("showReasonBtn").addEventListener("click", () => {
+  document.getElementById("letterText").textContent =
+    reasons[Math.floor(Math.random() * reasons.length)];
+});
+
+// 🕓 Countdown bis Treffen
+const targetDate = new Date("2025-10-24T20:00:00");
+const countdownEl = document.getElementById("countdown");
+function updateCountdown() {
+  const now = new Date();
+  const diff = targetDate - now;
+  if (diff <= 0) {countdownEl.textContent = "Endlich sehi 💕"; return;}
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+  countdownEl.textContent = `${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// 💕 Ja/Nein-Spiel
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.position = "absolute";
+  noBtn.style.left = Math.random() * 80 + "%";
+  noBtn.style.top = Math.random() * 80 + "%";
+});
+yesBtn.addEventListener("click", () => alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
+
+// 💊 Pille Countdown
+const pillTitle = document.getElementById("pillTitle");
+const pillCountdown = document.getElementById("pillCountdown");
+const pillTakenBtn = document.getElementById("pillTakenBtn");
+
+function updatePillCountdown() {
+  const now = new Date();
+  const pillTime = new Date();
+  pillTime.setHours(20, 0, 0, 0);
+
+  if (now > pillTime) pillTime.setDate(pillTime.getDate() + 1);
+
+  const diff = pillTime - now;
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+
+  const lastTaken = localStorage.getItem("pillTakenDate");
+  const today = new Date().toDateString();
+
+  if (lastTaken === today) {
+    pillTitle.textContent = "✅ Schon genommi heute!";
+    pillCountdown.textContent = `Nächste Pille in ${hours}h ${mins}m 💗`;
+  } else if (now.getHours() >= 20) {
+    pillTitle.textContent = "💊 Nimm die Pille ml!!!!";
+    pillCountdown.textContent = "Jetzt ist Zeit 💖";
+  } else {
+    pillTitle.textContent = "Pille späti nehmi:";
+    pillCountdown.textContent = `Noch ${hours} Stunden und ${mins} Minuten 💞`;
   }
-  setInterval(updateCountdown,1000);
-  updateCountdown();
+}
+setInterval(updatePillCountdown, 1000 * 30);
+updatePillCountdown();
+
+pillTakenBtn.addEventListener("click", () => {
+  localStorage.setItem("pillTakenDate", new Date().toDateString());
+  updatePillCountdown();
+});
+
+// 📝 Notizen öffnen/schließen
+const notesBtn = document.getElementById("notesButton");
+const notesPanel = document.getElementById("notesPanel");
+const notesArea = document.getElementById("notesArea");
+notesBtn.addEventListener("click", () => notesPanel.classList.toggle("open"));
+
+// 🔑 Authentication
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
+const registerBtn = document.getElementById("registerBtn");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+registerBtn.addEventListener("click", () => {
+  createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    .then(() => alert("Registrierung erfolgreich!"))
+    .catch((error) => alert(error.message));
+});
+
+loginBtn.addEventListener("click", () => {
+  signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    .then(() => alert("Erfolgreich angemeldet!"))
+    .catch((error) => alert(error.message));
+});
+
+logoutBtn.addEventListener("click", () => {
+  signOut(auth);
+});
+
+// 🔒 Firestore Notizen
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    logoutBtn.style.display = "block";
+    const notesRef = doc(db, "notes", user.uid);
+    const docSnap = await getDoc(notesRef);
+    notesArea.value = docSnap.exists() ? docSnap.data().text || "" : "";
+
+    // Listener für Live-Speichern
+    notesArea.oninput = async () => {
+      await setDoc(notesRef, { text: notesArea.value });
+    };
+  } else {
+    logoutBtn.style.display = "none";
+    notesArea.value = "";
+    notesArea.oninput = null;
+  }
 });
 </script>
-
-<!-- 100 Gründe -->
-<script>
-window.addEventListener("DOMContentLoaded",function(){
-  const reasons=[
-    "Du bist die erste Person die ich immer bei mir will.",
-    "Du bist das erste an das ich denke morgens.",
-    "Du hast so lange auf mich gewartet<3.",
-    "Du bist die süßeste Person die ich je gesehen habe.",
-    "Du bist so ein netter Mensch.",
-    "Du bist der Grund wieso ich Leben will.",
-    "Durch dich schaffe ich es morgens aufzustehen.",
-    "Ich habe so Angst dich zu verlieren.",
-    "Du bist so unglaublich schön.",
-    "Ich freue mich jedes Mal so sehr dich zu sehen.",
-    "Du lässt mich glauben geliebt werden zu können.",
-    "Du hast die schönsten Augen die ich je gesehen habe.",
-    "Du bist die lustigste Person die ich kenne.",
-    "Wir sind böse linked."
-  ];
-  document.getElementById("showReasonBtn").addEventListener("click",()=>{
-    document.getElementById("letterText").textContent=reasons[Math.floor(Math.random()*reasons.length)];
-  });
-});
-</script>
-
-<!-- Ja/Nein Spiel -->
-<script>
-window.addEventListener("DOMContentLoaded",function(){
-  const n=document.getElementById("noBtn"), y=document.getElementById("yesBtn");
-  n.addEventListener("mouseover",()=>{n.style.position="absolute";n.style.left=Math.random()*80+"%"; n.style.top=Math.random()*80+"%";});
-  y.addEventListener("click",()=>{alert("Yaaay! du hast bestimmt nicht versucht nein zu drücken....");});
-});
-</script>
-
 </body>
 </html>
