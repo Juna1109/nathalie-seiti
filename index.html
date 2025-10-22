@@ -10,123 +10,143 @@ body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(to bottom right, #ffe6f0, #fff);
   overflow-x: hidden;
+  color: #d63384;
+  scroll-behavior: smooth;
 }
-h1, h2, p {text-align: center; color: #d63384;}
+
+h1, h2, p { text-align: center; }
+
 button {
-  background: #ff6b9b; border: none; color: white;
-  padding: 10px 20px; border-radius: 25px; cursor: pointer;
-  transition: transform 0.3s;
+  background: #ff6b9b;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-button:hover {transform: scale(1.1); background: #ff85ad;}
+button:hover { transform: scale(1.05); background: #ff85ad; }
+
 .letter {
-  background: #fff0f6; border: 2px solid #ffb6c1;
-  border-radius: 15px; padding: 20px; margin: 40px auto;
-  width: 80%; max-width: 400px; text-align: center;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 40px auto;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
   box-shadow: 0 0 15px rgba(255,182,193,0.4);
 }
-.letter p {color: #333;}
-#countdown {font-size: 20px; margin-top: 10px; color: #ff5c8d;}
-.game {text-align: center; margin: 40px 0; position: relative; height: 150px;}
+.letter p { color: #333; }
+
+#countdown { font-size: 20px; margin-top: 10px; color: #ff5c8d; }
+
 .gallery-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 15px;
-  flex-wrap: wrap;
   margin: 20px auto;
 }
 .gallery-container img {
-  width: 200px;
-  max-width: 90vw;
+  width: 80%;
+  max-width: 320px;
   height: auto;
   border-radius: 15px;
   box-shadow: 0 0 12px rgba(0,0,0,0.2);
   transition: transform 0.3s;
 }
-.gallery-container img:hover { transform: scale(1.05); }
-footer {text-align: center; padding: 20px; color: #888;}
-.heart {
-  position: fixed; pointer-events: auto; z-index: 9999;
-  opacity: 0.9; will-change: transform, opacity;
-  cursor: pointer; user-select: none; font-size: 20px;
-}
+.gallery-container img:hover { transform: scale(1.03); }
 
-/* 💊 Pille-Reminder oben rechts */
-#pillReminder {
-  position: fixed; top: 10px; right: 10px;
-  background: #fff0f6; border: 2px solid #ffb6c1;
-  border-radius: 15px; box-shadow: 0 0 15px rgba(255,182,193,0.7);
-  padding: 15px 20px; text-align: center; z-index: 10000; width: 220px;
+footer { text-align: center; padding: 20px; color: #888; }
+
+/* 🌸 Floating Menü unten rechts */
+#menuButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff85ad;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 26px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 10001;
   transition: all 0.3s ease;
 }
-#pillMinimize {
-  position: absolute; top: 5px; right: 5px;
-  background: #ff85ad; border: none; color: white;
-  border-radius: 50%; width: 25px; height: 25px; cursor: pointer;
-}
-#pillCountdown, #pillTitle { margin-top: 5px; }
-#pillReminder.minimized #pillTakenBtn { display: none; }
+#menuButton:hover { background: #ff5c8d; transform: scale(1.05); }
 
-/* Love Counter oben links */
-#loveCounter {
-  position: fixed; top: 50px; left: 10px;
-  font-size: 18px; color: #d63384; z-index: 10001;
+#menuPanel {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 10000;
+  width: 250px;
+  padding: 15px;
 }
+#menuPanel.open { display: flex; animation: slideUp 0.3s ease-out; }
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+#menuPanel button { margin: 5px 0; width: 100%; }
 
-/* Love Shop Button oben links */
-#loveShopBtn {
-  position: fixed; top: 80px; left: 10px;
-  background:#ff6b9b; color:white; border:none; border-radius:25px;
-  padding:5px 15px; cursor:pointer; z-index:10001;
+/* 💊 Pille Reminder im Menü */
+#pillReminder {
+  text-align: center;
+  padding: 10px;
+  background: #fff0f6;
+  border-radius: 15px;
+  border: 2px solid #ffb6c1;
+  margin-bottom: 10px;
 }
-#loveShopBtn:hover {background:#ff85ad; transform: scale(1.05);}
+#pillCountdown { font-size: 14px; color: #ff5c8d; }
 
-/* Love Shop Panel oben links */
-#loveShop {
-  display:none; position:fixed; top:120px; left:10px;
-  background:#fff0f6; border:2px solid #ffb6c1; padding:15px;
-  border-radius:10px; z-index:10002;
-}
-
-/* Leaderboard */
-#leaderboard {
-  position: fixed; top:10px; left:150px;
-  background:#fff0f6; border:2px solid #ffb6c1; padding:10px;
-  border-radius:10px; z-index:10001;
-}
-
-/* 📝 Notizen */
-#notesButton {
-  position: fixed; bottom: 20px; left: 20px;
-  background: #ff85ad; color: white; border: none;
-  border-radius: 30px; padding: 10px 20px; cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 16px;
-  z-index: 10000; transition: background 0.3s, transform 0.2s;
-}
-#notesButton:hover { background: #ff5c8d; transform: scale(1.05); }
+/* 📝 Notizen Panel */
 #notesPanel {
-  position: fixed; bottom: 70px; left: 20px; width: 280px; height: 260px;
-  background: #fff0f6; border: 2px solid #ffb6c1; border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: none; flex-direction: column;
-  overflow: hidden; z-index: 9999;
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  left: 5%;
+  width: 90%;
+  max-width: 400px;
+  height: 250px;
+  background: #fff0f6;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
 }
 #notesPanel.open { display: flex; animation: slideUp 0.3s ease-out; }
-#notesPanel textarea { flex: 1; margin: 10px; border-radius: 10px;
-  border: 1px solid #ffb6c1; padding: 8px; resize: none;
-  font-family: "Poppins", sans-serif; font-size: 14px;
+#notesPanel textarea {
+  flex: 1;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid #ffb6c1;
+  padding: 8px;
+  resize: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
 }
-#notesPanel h3 { text-align: center; color: #d63384; margin-top: 10px; }
 
-/* Media Queries für Handy */
+/* 📱 Handy Anpassungen */
 @media (max-width: 600px) {
-  #notesPanel { bottom: 10px; left: 5%; width: 90%; height: 200px; }
-  #notesButton { bottom: 10px; left: 5%; width: 90%; }
-  .gallery-container { flex-direction: column; gap: 10px; }
-  .gallery-container img { width: 80%; max-width: 300px; }
-  .gallery-container button { width: 50%; padding: 10px; }
-  #pillReminder { top: 5px; right: 5%; width: 90%; padding: 10px; }
-  #loveCounter, #loveShopBtn { left:5%; right:auto; }
-  #loveShop { left:5%; right:auto; }
+  h1 { font-size: 1.4em; }
+  .letter { margin: 20px auto; padding: 15px; }
+  .gallery-container img { width: 90%; }
+  #menuButton { width: 55px; height: 55px; font-size: 22px; }
+  #menuPanel { width: 80%; right: 10%; bottom: 80px; }
 }
 </style>
 </head>
@@ -135,7 +155,7 @@ footer {text-align: center; padding: 20px; color: #888;}
 <h1>💖 Für dich bububär 💖</h1>
 <p>Diese Seite ist für dich gemacht, weil ich dich ganz doll liebi 💞</p>
 
-<div class="letter" id="letterBox">
+<div class="letter">
   <h2>💌 Klick, um einen Grund zu sehen, warum ich dich liebe</h2>
   <p id="letterText">Klick auf den Button, um einen Grund zu sehen!</p>
   <button id="showReasonBtn">Zeig mir einen Grund 💕</button>
@@ -152,206 +172,137 @@ footer {text-align: center; padding: 20px; color: #888;}
   <button id="changeImageBtn">Bild wechseln 💕</button>
 </div>
 
-<div class="game">
+<div class="game" style="text-align:center; margin:40px 0;">
   <h2>Bin ich der allertollste Freund auf dieser Welt? 💕</h2>
   <button id="yesBtn">Ja du geiler</button>
   <button id="noBtn">Nein!!!</button>
 </div>
 
-<!-- 💊 Pille-Reminder -->
-<div id="pillReminder">
-  <button id="pillMinimize">–</button>
-  <h2 id="pillTitle">💊 Nimm die Pille ml!!!!</h2>
-  <div id="pillCountdown"></div>
-  <button id="pillTakenBtn">Hab genommi 😇</button>
-</div>
-
-<!-- Love Counter -->
-<div id="loveCounter">Liebe: 0 💖</div>
-
-<!-- Love Shop -->
-<button id="loveShopBtn">Love Shop 💕</button>
-<div id="loveShop">
-  <h3>Love Shop 💖</h3>
-  <button onclick="buyItem(10,'Mini Date')">Mini Date - 10 💖</button><br>
-  <button onclick="buyItem(25,'Ice Cream Date')">Ice Cream Date - 25 💖</button><br>
-  <button onclick="buyItem(50,'Movie Date')">Movie Date - 50 💖</button><br>
-  <button onclick="document.getElementById('loveShop').style.display='none'">Schließen</button>
-</div>
-
-<!-- Leaderboard -->
-<div id="leaderboard">
-  <h3>Leaderboard 💖</h3>
-  <ol id="leaderboardList"></ol>
-</div>
-
 <!-- 📝 Notizen -->
-<button id="notesButton">📝 Notizen</button>
 <div id="notesPanel">
   <h3>Paladins Ideen 💡</h3>
   <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..."></textarea>
 </div>
 
+<!-- 🌸 Floating Menü -->
+<button id="menuButton">💖</button>
+<div id="menuPanel">
+  <div id="pillReminder">
+    <h4 id="pillTitle">💊 Nimm die Pille ml!</h4>
+    <div id="pillCountdown"></div>
+    <button id="pillTakenBtn">Hab genommi 😇</button>
+  </div>
+  <button id="loveShopBtn">Love Shop 💕</button>
+  <button id="notesBtn">📝 Notizen</button>
+  <div id="loveCounter">Liebe: 0 💖</div>
+  <div id="leaderboard">
+    <h4>Leaderboard 💖</h4>
+    <ol id="leaderboardList"></ol>
+  </div>
+</div>
+
 <footer><p>Mit Liebe gemacht von justini 💕</p></footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
 <script>
-// Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyDJl-UVkVFCj-CfDiXcYBbVRoT9WpboXOs",
-  authDomain: "nathalie-notizen-webseite.firebaseapp.com",
-  projectId: "nathalie-notizen-webseite",
-  storageBucket: "nathalie-notizen-webseite.firebasestorage.app",
-  messagingSenderId: "627451220911",
-  appId: "1:627451220911:web:63357b6799f075bacfd55a"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// 💖 Herzchen Spiel & Liebe speichern
-let lovePoints = 0;
-const loveCounter = document.getElementById("loveCounter");
-
-function updateLoveDisplay(){ loveCounter.textContent=`Liebe: ${lovePoints} 💖`; }
-
-auth.onAuthStateChanged(user=>{
-  if(user){
-    const loveRef = db.collection("users").doc(user.uid);
-    // Punkte laden
-    loveRef.get().then(doc=>{
-      if(doc.exists){ lovePoints = doc.data().love || 0; updateLoveDisplay(); }
-    });
-    function saveLovePoints(){ loveRef.set({love: lovePoints},{merge:true}); }
-
-    function createHeart(){
-      const heart = document.createElement("div");
-      heart.classList.add("heart"); heart.innerText="💖";
-      const size=Math.random()*20+10; heart.style.fontSize=size+"px";
-      heart.style.left=Math.random()*window.innerWidth+"px";
-      heart.style.top="-50px"; document.body.appendChild(heart);
-
-      heart.addEventListener("click", ()=>{
-        lovePoints+=1; updateLoveDisplay(); saveLovePoints(); heart.remove();
-      });
-
-      const endY=window.innerHeight+50; const duration=Math.random()*4000+4000;
-      let start=null;
-      function animateHeart(timestamp){
-        if(!start) start=timestamp;
-        const fraction=(timestamp-start)/duration;
-        heart.style.transform=`translateY(${fraction*endY}px) rotate(${fraction*360}deg)`;
-        heart.style.opacity=1-fraction;
-        if(fraction<1) requestAnimationFrame(animateHeart); else heart.remove();
-      }
-      requestAnimationFrame(animateHeart);
-    }
-    setInterval(createHeart,800);
-
-    // Leaderboard
-    function updateLeaderboard(){
-      db.collection("users").orderBy("love","desc").limit(5).get().then(snapshot=>{
-        const list=document.getElementById("leaderboardList");
-        list.innerHTML="";
-        snapshot.forEach(doc=>{
-          const li=document.createElement("li");
-          li.textContent=`${doc.id}: ${doc.data().love} 💖`;
-          list.appendChild(li);
-        });
-      });
-    }
-    setInterval(updateLeaderboard,60000);
-    updateLeaderboard();
-  }
-});
-
-// Love Shop
-const loveShopBtn = document.getElementById("loveShopBtn");
-loveShopBtn.addEventListener("click",()=>{
-  const shop=document.getElementById("loveShop");
-  shop.style.display=shop.style.display==='none'?'block':'none';
-});
-function buyItem(cost,name){
-  if(lovePoints>=cost){ lovePoints-=cost; updateLoveDisplay(); alert(`Du hast ${name} gekauft 💕`); }
-  else { alert("Nicht genug Liebe 💖"); }
-}
-
 // 💌 Gründe
-const reasons=["Du bist die erste Person, die ich immer bei mir will.","Du bist das erste, an das ich morgens denke.","Du hast so lange auf mich gewartet <3.","Du bist so süß und lieb.","Du machst mich einfach glücklich.","Du bist der Grund, warum ich lächle.","Ich liebe deine Art zu lachen.","Ich freue mich jedes Mal, dich zu sehen.","Du bist wunderschön.","Ich bin so stolz, dass du meins bist.","Deine Augen sind so wunderschön"];
-document.getElementById("showReasonBtn").addEventListener("click",()=>{document.getElementById("letterText").textContent=reasons[Math.floor(Math.random()*reasons.length)];});
+const reasons = [
+  "Du bist die erste Person, die ich immer bei mir will.",
+  "Du bist das erste, an das ich morgens denke.",
+  "Du hast so lange auf mich gewartet <3.",
+  "Du bist so süß und lieb.",
+  "Du machst mich einfach glücklich.",
+  "Du bist der Grund, warum ich lächle.",
+  "Ich liebe deine Art zu lachen.",
+  "Ich freue mich jedes Mal, dich zu sehen.",
+  "Du bist wunderschön.",
+  "Ich bin so stolz, dass du meins bist.",
+  "Deine Augen sind so wunderschön"
+];
+document.getElementById("showReasonBtn").addEventListener("click",()=>{
+  document.getElementById("letterText").textContent =
+    reasons[Math.floor(Math.random()*reasons.length)];
+});
 
 // 🕓 Countdown
 const targetDate = new Date("2025-10-24T20:00:00");
-const countdownEl=document.getElementById("countdown");
+const countdownEl = document.getElementById("countdown");
 function updateCountdown(){
-  const now=new Date(); const diff=targetDate-now;
-  if(diff<=0){countdownEl.textContent="Endlich sehi 💕"; return;}
-  const days=Math.floor(diff/(1000*60*60*24));
-  const hours=Math.floor((diff/(1000*60*60))%24);
-  const mins=Math.floor((diff/(1000*60))%60);
-  const secs=Math.floor((diff/1000)%60);
-  countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
+  const now = new Date();
+  const diff = targetDate - now;
+  if (diff <= 0) { countdownEl.textContent="Endlich sehi 💕"; return; }
+  const d = Math.floor(diff/86400000),
+        h = Math.floor((diff/3600000)%24),
+        m = Math.floor((diff/60000)%60),
+        s = Math.floor((diff/1000)%60);
+  countdownEl.textContent=`${d} Tage, ${h} Std, ${m} Min, ${s} Sek`;
 }
-setInterval(updateCountdown,1000); updateCountdown();
+setInterval(updateCountdown,1000);
+updateCountdown();
 
 // 💕 Ja/Nein
-const noBtn=document.getElementById("noBtn");
-const yesBtn=document.getElementById("yesBtn");
-noBtn.addEventListener("mouseover",()=>{ noBtn.style.position="absolute"; noBtn.style.left=Math.random()*80+"%"; noBtn.style.top=Math.random()*80+"%"; });
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*80+"%";
+  noBtn.style.top=Math.random()*80+"%";
+});
 yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
+
+// 🌸 Menü
+const menuBtn = document.getElementById("menuButton");
+const menuPanel = document.getElementById("menuPanel");
+menuBtn.addEventListener("click",()=>menuPanel.classList.toggle("open"));
+
+// 📝 Notizen
+const notesBtn = document.getElementById("notesBtn");
+const notesPanel = document.getElementById("notesPanel");
+notesBtn.addEventListener("click",()=>notesPanel.classList.toggle("open"));
 
 // 💊 Pille
 const pillTitle=document.getElementById("pillTitle");
 const pillCountdown=document.getElementById("pillCountdown");
 const pillTakenBtn=document.getElementById("pillTakenBtn");
-const pillMinimize=document.getElementById("pillMinimize");
-let pillMinimized=false;
-pillMinimize.addEventListener("click",()=>{
-  pillMinimized=!pillMinimized;
-  const reminder=document.getElementById("pillReminder");
-  if(pillMinimized){ reminder.style.height="40px"; pillTakenBtn.style.display="none"; }
-  else { reminder.style.height="auto"; pillTakenBtn.style.display="block"; }
-});
 function updatePillCountdown(){
-  const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0);
+  const now=new Date(), pillTime=new Date();
+  pillTime.setHours(20,0,0,0);
   if(now>pillTime) pillTime.setDate(pillTime.getDate()+1);
   const diff=pillTime-now;
-  const hours=Math.floor(diff/(1000*60*60));
-  const mins=Math.floor((diff/(1000*60))%60);
+  const hours=Math.floor(diff/3600000);
+  const mins=Math.floor((diff/60000)%60);
   const lastTaken=localStorage.getItem("pillTakenDate");
   const today=new Date().toDateString();
-  if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste Pille in ${hours}h ${mins}m 💗`; }
-  else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; }
-  else { pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours} Stunden und ${mins} Minuten 💞`; }
+  if(lastTaken===today){ 
+    pillTitle.textContent="✅ Schon genommi heute!";
+    pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`;
+  } else if(now.getHours()>=20){
+    pillTitle.textContent="💊 Nimm die Pille ml!!!!";
+    pillCountdown.textContent="Jetzt ist Zeit 💖";
+  } else {
+    pillTitle.textContent="Pille späti nehmi:";
+    pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`;
+  }
 }
-setInterval(updatePillCountdown,30000); updatePillCountdown();
-pillTakenBtn.addEventListener("click",()=>{localStorage.setItem("pillTakenDate",new Date().toDateString()); updatePillCountdown();});
-
-// 📝 Notizen
-const notesBtn=document.getElementById("notesButton");
-const notesPanel=document.getElementById("notesPanel");
-const notesArea=document.getElementById("notesArea");
-notesBtn.addEventListener("click",()=>{notesPanel.classList.toggle("open");});
-
-// Firebase Notizen
-auth.onAuthStateChanged(user=>{
-  if(user){
-    const notesRef=db.collection("notes").doc(user.uid);
-    notesRef.get().then(doc=>{ if(doc.exists) notesArea.value=doc.data().text||""; });
-    notesArea.addEventListener("input",()=>{ notesRef.set({text:notesArea.value}); });
-  } else { notesArea.value=""; }
+setInterval(updatePillCountdown,30000);
+updatePillCountdown();
+pillTakenBtn.addEventListener("click",()=>{
+  localStorage.setItem("pillTakenDate",new Date().toDateString());
+  updatePillCountdown();
 });
 
-// Galerie Random Image
+// Galerie
 const images=["https://i.imgur.com/m05eQGf.jpeg","https://i.imgur.com/rp80WsN.jpeg","https://i.imgur.com/BIxd6ix.jpeg"];
 const randomImage=document.getElementById("randomImage");
-const changeImageBtn=document.getElementById("changeImageBtn");
 function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
-changeImageBtn.addEventListener("click",setRandomImage);
+document.getElementById("changeImageBtn").addEventListener("click",setRandomImage);
 setRandomImage();
+
+// 💖 Dummy Love Counter + Leaderboard (vereinfacht)
+let love=0;
+document.getElementById("loveShopBtn").addEventListener("click",()=>{
+  love+=10;
+  document.getElementById("loveCounter").textContent=`Liebe: ${love} 💖`;
+});
 </script>
 </body>
 </html>
