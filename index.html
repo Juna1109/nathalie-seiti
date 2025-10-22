@@ -36,35 +36,34 @@ button:hover {transform: scale(1.1); background: #ff85ad;}
   margin: 20px auto;
 }
 .gallery-container img {
-  width: 200px;      /* kleinere Größe */
-  max-width: 90vw;   /* max 90% Breite auf kleinen Bildschirmen */
+  width: 200px;
+  max-width: 90vw;
   height: auto;
   border-radius: 15px;
   box-shadow: 0 0 12px rgba(0,0,0,0.2);
   transition: transform 0.3s;
 }
 .gallery-container img:hover { transform: scale(1.05); }
-
 footer {text-align: center; padding: 20px; color: #888;}
 .heart {
   position: fixed; pointer-events: none; z-index: 9999;
   opacity: 0.9; will-change: transform, opacity;
 }
 
-/* 💊 Pille-Reminder */
+/* 💊 Pille-Reminder oben */
 #pillReminder {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   background: #fff0f6;
   border: 2px solid #ffb6c1;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(255,182,193,0.7);
-  padding: 20px;
+  box-shadow: 0 0 15px rgba(255,182,193,0.7);
+  padding: 15px 20px;
   text-align: center;
   z-index: 10000;
-  width: 250px;
-  animation: fadeIn 0.8s ease;
+  width: 220px;
+  transition: all 0.3s ease;
 }
 #pillMinimize {
   position: absolute;
@@ -72,7 +71,8 @@ footer {text-align: center; padding: 20px; color: #888;}
   background: #ff85ad; border: none; color: white;
   border-radius: 50%; width: 25px; height: 25px; cursor: pointer;
 }
-#pillCountdown { font-size: 18px; color: #d63384; margin-top: 10px; }
+#pillCountdown, #pillTitle { margin-top: 5px; }
+#pillReminder.minimized #pillTakenBtn { display: none; }
 
 /* 📝 Notizen */
 #notesButton {
@@ -129,24 +129,14 @@ footer {text-align: center; padding: 20px; color: #888;}
     width: 90%;
     height: 200px;
   }
-  #pillReminder {
-    bottom: 220px; /* nach oben verschoben */
-    right: 5%;
-    width: 90%;
-  }
   #notesButton { bottom: 10px; left: 5%; width: 90%; }
   .gallery-container {
     flex-direction: column;
     gap: 10px;
   }
-  .gallery-container img {
-    width: 80%;      /* max 80% der Bildschirmbreite */
-    max-width: 300px;
-  }
-  .gallery-container button {
-    width: 50%;
-    padding: 10px;
-  }
+  .gallery-container img { width: 80%; max-width: 300px; }
+  .gallery-container button { width: 50%; padding: 10px; }
+  #pillReminder { top: 5px; right: 5%; width: 90%; padding: 10px; }
 }
 </style>
 </head>
@@ -290,11 +280,12 @@ const pillCountdown = document.getElementById("pillCountdown");
 const pillTakenBtn = document.getElementById("pillTakenBtn");
 const pillMinimize = document.getElementById("pillMinimize");
 let pillMinimized = false;
+
 pillMinimize.addEventListener("click", () => {
+  const reminder = document.getElementById("pillReminder");
   pillMinimized = !pillMinimized;
-  document.getElementById("pillReminder").style.height = pillMinimized ? "40px" : "auto";
-  document.getElementById("pillCountdown").style.display = pillMinimized ? "none" : "block";
-  pillTakenBtn.style.display = pillMinimized ? "none" : "block";
+  if(pillMinimized) reminder.classList.add("minimized");
+  else reminder.classList.remove("minimized");
 });
 
 function updatePillCountdown() {
