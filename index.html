@@ -48,133 +48,80 @@ footer {text-align: center; padding: 20px; color: #888;}
 .heart {
   position: fixed; pointer-events: auto; z-index: 9999;
   opacity: 0.9; will-change: transform, opacity;
-  cursor: pointer;
-  user-select: none;
-  font-size: 20px;
+  cursor: pointer; user-select: none; font-size: 20px;
 }
 
 /* 💊 Pille-Reminder oben rechts */
 #pillReminder {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background: #fff0f6;
-  border: 2px solid #ffb6c1;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(255,182,193,0.7);
-  padding: 15px 20px;
-  text-align: center;
-  z-index: 10000;
-  width: 220px;
+  position: fixed; top: 10px; right: 10px;
+  background: #fff0f6; border: 2px solid #ffb6c1;
+  border-radius: 15px; box-shadow: 0 0 15px rgba(255,182,193,0.7);
+  padding: 15px 20px; text-align: center; z-index: 10000; width: 220px;
   transition: all 0.3s ease;
 }
 #pillMinimize {
-  position: absolute;
-  top: 5px; right: 5px;
+  position: absolute; top: 5px; right: 5px;
   background: #ff85ad; border: none; color: white;
   border-radius: 50%; width: 25px; height: 25px; cursor: pointer;
 }
 #pillCountdown, #pillTitle { margin-top: 5px; }
 #pillReminder.minimized #pillTakenBtn { display: none; }
 
-/* Love Counter (oben links) */
+/* Love Counter oben links */
 #loveCounter {
-  position: fixed;
-  top: 50px;
-  left: 10px;
-  font-size: 18px;
-  color: #d63384;
-  z-index: 10001;
+  position: fixed; top: 50px; left: 10px;
+  font-size: 18px; color: #d63384; z-index: 10001;
 }
 
 /* Love Shop Button oben links */
 #loveShopBtn {
-  position: fixed;
-  top: 80px;
-  left: 10px;
-  background:#ff6b9b;
-  color:white;
-  border:none;
-  border-radius:25px;
-  padding:5px 15px;
-  cursor:pointer;
-  z-index:10001;
+  position: fixed; top: 80px; left: 10px;
+  background:#ff6b9b; color:white; border:none; border-radius:25px;
+  padding:5px 15px; cursor:pointer; z-index:10001;
 }
 #loveShopBtn:hover {background:#ff85ad; transform: scale(1.05);}
 
 /* Love Shop Panel oben links */
 #loveShop {
-  display:none;
-  position:fixed;
-  top:120px;
-  left:10px;
-  background:#fff0f6;
-  border:2px solid #ffb6c1;
-  padding:15px;
-  border-radius:10px;
-  z-index:10002;
+  display:none; position:fixed; top:120px; left:10px;
+  background:#fff0f6; border:2px solid #ffb6c1; padding:15px;
+  border-radius:10px; z-index:10002;
+}
+
+/* Leaderboard */
+#leaderboard {
+  position: fixed; top:10px; left:150px;
+  background:#fff0f6; border:2px solid #ffb6c1; padding:10px;
+  border-radius:10px; z-index:10001;
 }
 
 /* 📝 Notizen */
 #notesButton {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #ff85ad;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  font-size: 16px;
-  z-index: 10000;
-  transition: background 0.3s, transform 0.2s;
+  position: fixed; bottom: 20px; left: 20px;
+  background: #ff85ad; color: white; border: none;
+  border-radius: 30px; padding: 10px 20px; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 16px;
+  z-index: 10000; transition: background 0.3s, transform 0.2s;
 }
 #notesButton:hover { background: #ff5c8d; transform: scale(1.05); }
-
 #notesPanel {
-  position: fixed;
-  bottom: 70px;
-  left: 20px;
-  width: 280px;
-  height: 260px;
-  background: #fff0f6;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
+  position: fixed; bottom: 70px; left: 20px; width: 280px; height: 260px;
+  background: #fff0f6; border: 2px solid #ffb6c1; border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: none; flex-direction: column;
+  overflow: hidden; z-index: 9999;
 }
 #notesPanel.open { display: flex; animation: slideUp 0.3s ease-out; }
-
-#notesPanel textarea {
-  flex: 1;
-  margin: 10px;
-  border-radius: 10px;
-  border: 1px solid #ffb6c1;
-  padding: 8px;
-  resize: none;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
+#notesPanel textarea { flex: 1; margin: 10px; border-radius: 10px;
+  border: 1px solid #ffb6c1; padding: 8px; resize: none;
+  font-family: "Poppins", sans-serif; font-size: 14px;
 }
 #notesPanel h3 { text-align: center; color: #d63384; margin-top: 10px; }
 
-/* Media Queries für Handys */
+/* Media Queries für Handy */
 @media (max-width: 600px) {
-  #notesPanel {
-    bottom: 10px;
-    left: 5%;
-    width: 90%;
-    height: 200px;
-  }
+  #notesPanel { bottom: 10px; left: 5%; width: 90%; height: 200px; }
   #notesButton { bottom: 10px; left: 5%; width: 90%; }
-  .gallery-container {
-    flex-direction: column;
-    gap: 10px;
-  }
+  .gallery-container { flex-direction: column; gap: 10px; }
   .gallery-container img { width: 80%; max-width: 300px; }
   .gallery-container button { width: 50%; padding: 10px; }
   #pillReminder { top: 5px; right: 5%; width: 90%; padding: 10px; }
@@ -221,6 +168,7 @@ footer {text-align: center; padding: 20px; color: #888;}
 
 <!-- Love Counter -->
 <div id="loveCounter">Liebe: 0 💖</div>
+
 <!-- Love Shop -->
 <button id="loveShopBtn">Love Shop 💕</button>
 <div id="loveShop">
@@ -229,6 +177,12 @@ footer {text-align: center; padding: 20px; color: #888;}
   <button onclick="buyItem(25,'Ice Cream Date')">Ice Cream Date - 25 💖</button><br>
   <button onclick="buyItem(50,'Movie Date')">Movie Date - 50 💖</button><br>
   <button onclick="document.getElementById('loveShop').style.display='none'">Schließen</button>
+</div>
+
+<!-- Leaderboard -->
+<div id="leaderboard">
+  <h3>Leaderboard 💖</h3>
+  <ol id="leaderboardList"></ol>
 </div>
 
 <!-- 📝 Notizen -->
@@ -245,7 +199,7 @@ footer {text-align: center; padding: 20px; color: #888;}
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
 <script>
-// Firebase config
+// Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDJl-UVkVFCj-CfDiXcYBbVRoT9WpboXOs",
   authDomain: "nathalie-notizen-webseite.firebaseapp.com",
@@ -258,80 +212,82 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// 💖 Herzchen Spiel
+// 💖 Herzchen Spiel & Liebe speichern
 let lovePoints = 0;
-function updateLoveDisplay() {
-  document.getElementById("loveCounter").textContent = `Liebe: ${lovePoints} 💖`;
-}
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerText = "💖";
-  const size = Math.random() * 20 + 10;
-  heart.style.fontSize = size + "px";
-  heart.style.left = Math.random() * window.innerWidth + "px";
-  heart.style.top = "-50px";
-  document.body.appendChild(heart);
+const loveCounter = document.getElementById("loveCounter");
 
-  heart.addEventListener("click", () => {
-    lovePoints += 1;
-    updateLoveDisplay();
-    heart.remove();
-  });
+function updateLoveDisplay(){ loveCounter.textContent=`Liebe: ${lovePoints} 💖`; }
 
-  const endY = window.innerHeight + 50;
-  const duration = Math.random() * 4000 + 4000;
-  let start = null;
-  function animateHeart(timestamp) {
-    if (!start) start = timestamp;
-    const progress = timestamp - start;
-    const fraction = progress / duration;
-    heart.style.transform = `translateY(${fraction * endY}px) rotate(${fraction * 360}deg)`;
-    heart.style.opacity = 1 - fraction;
-    if (fraction < 1) requestAnimationFrame(animateHeart);
-    else heart.remove();
+auth.onAuthStateChanged(user=>{
+  if(user){
+    const loveRef = db.collection("users").doc(user.uid);
+    // Punkte laden
+    loveRef.get().then(doc=>{
+      if(doc.exists){ lovePoints = doc.data().love || 0; updateLoveDisplay(); }
+    });
+    function saveLovePoints(){ loveRef.set({love: lovePoints},{merge:true}); }
+
+    function createHeart(){
+      const heart = document.createElement("div");
+      heart.classList.add("heart"); heart.innerText="💖";
+      const size=Math.random()*20+10; heart.style.fontSize=size+"px";
+      heart.style.left=Math.random()*window.innerWidth+"px";
+      heart.style.top="-50px"; document.body.appendChild(heart);
+
+      heart.addEventListener("click", ()=>{
+        lovePoints+=1; updateLoveDisplay(); saveLovePoints(); heart.remove();
+      });
+
+      const endY=window.innerHeight+50; const duration=Math.random()*4000+4000;
+      let start=null;
+      function animateHeart(timestamp){
+        if(!start) start=timestamp;
+        const fraction=(timestamp-start)/duration;
+        heart.style.transform=`translateY(${fraction*endY}px) rotate(${fraction*360}deg)`;
+        heart.style.opacity=1-fraction;
+        if(fraction<1) requestAnimationFrame(animateHeart); else heart.remove();
+      }
+      requestAnimationFrame(animateHeart);
+    }
+    setInterval(createHeart,800);
+
+    // Leaderboard
+    function updateLeaderboard(){
+      db.collection("users").orderBy("love","desc").limit(5).get().then(snapshot=>{
+        const list=document.getElementById("leaderboardList");
+        list.innerHTML="";
+        snapshot.forEach(doc=>{
+          const li=document.createElement("li");
+          li.textContent=`${doc.id}: ${doc.data().love} 💖`;
+          list.appendChild(li);
+        });
+      });
+    }
+    setInterval(updateLeaderboard,60000);
+    updateLeaderboard();
   }
-  requestAnimationFrame(animateHeart);
-}
-setInterval(createHeart, 800);
-
-const loveShopBtn = document.getElementById("loveShopBtn");
-loveShopBtn.addEventListener("click", ()=>{
-  const shop = document.getElementById("loveShop");
-  shop.style.display = shop.style.display==='none'?'block':'none';
 });
-function buyItem(cost,itemName){
-  if(lovePoints >= cost){
-    lovePoints -= cost;
-    updateLoveDisplay();
-    alert(`Du hast ${itemName} gekauft 💕`);
-  } else { alert("Nicht genug Liebe 💖"); }
+
+// Love Shop
+const loveShopBtn = document.getElementById("loveShopBtn");
+loveShopBtn.addEventListener("click",()=>{
+  const shop=document.getElementById("loveShop");
+  shop.style.display=shop.style.display==='none'?'block':'none';
+});
+function buyItem(cost,name){
+  if(lovePoints>=cost){ lovePoints-=cost; updateLoveDisplay(); alert(`Du hast ${name} gekauft 💕`); }
+  else { alert("Nicht genug Liebe 💖"); }
 }
 
 // 💌 Gründe
-const reasons = [
-  "Du bist die erste Person, die ich immer bei mir will.",
-  "Du bist das erste, an das ich morgens denke.",
-  "Du hast so lange auf mich gewartet <3.",
-  "Du bist so süß und lieb.",
-  "Du machst mich einfach glücklich.",
-  "Du bist der Grund, warum ich lächle.",
-  "Ich liebe deine Art zu lachen.",
-  "Ich freue mich jedes Mal, dich zu sehen.",
-  "Du bist wunderschön.",
-  "Ich bin so stolz, dass du meins bist.",
-  "Deine Augen sind so wunderschön."
-];
-document.getElementById("showReasonBtn").addEventListener("click", ()=>{
-  document.getElementById("letterText").textContent = reasons[Math.floor(Math.random()*reasons.length)];
-});
+const reasons=["Du bist die erste Person, die ich immer bei mir will.","Du bist das erste, an das ich morgens denke.","Du hast so lange auf mich gewartet <3.","Du bist so süß und lieb.","Du machst mich einfach glücklich.","Du bist der Grund, warum ich lächle.","Ich liebe deine Art zu lachen.","Ich freue mich jedes Mal, dich zu sehen.","Du bist wunderschön.","Ich bin so stolz, dass du meins bist.","Deine Augen sind so wunderschön"];
+document.getElementById("showReasonBtn").addEventListener("click",()=>{document.getElementById("letterText").textContent=reasons[Math.floor(Math.random()*reasons.length)];});
 
 // 🕓 Countdown
 const targetDate = new Date("2025-10-24T20:00:00");
-const countdownEl = document.getElementById("countdown");
+const countdownEl=document.getElementById("countdown");
 function updateCountdown(){
-  const now = new Date();
-  const diff = targetDate - now;
+  const now=new Date(); const diff=targetDate-now;
   if(diff<=0){countdownEl.textContent="Endlich sehi 💕"; return;}
   const days=Math.floor(diff/(1000*60*60*24));
   const hours=Math.floor((diff/(1000*60*60))%24);
@@ -339,60 +295,40 @@ function updateCountdown(){
   const secs=Math.floor((diff/1000)%60);
   countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
 }
-setInterval(updateCountdown,1000);
-updateCountdown();
+setInterval(updateCountdown,1000); updateCountdown();
 
 // 💕 Ja/Nein
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-noBtn.addEventListener("mouseover",()=>{
-  noBtn.style.position="absolute";
-  noBtn.style.left=Math.random()*80+"%";
-  noBtn.style.top=Math.random()*80+"%";
-});
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+noBtn.addEventListener("mouseover",()=>{ noBtn.style.position="absolute"; noBtn.style.left=Math.random()*80+"%"; noBtn.style.top=Math.random()*80+"%"; });
 yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
 
 // 💊 Pille
-const pillTitle = document.getElementById("pillTitle");
-const pillCountdown = document.getElementById("pillCountdown");
-const pillTakenBtn = document.getElementById("pillTakenBtn");
-const pillMinimize = document.getElementById("pillMinimize");
-let pillMinimized = false;
-pillMinimize.addEventListener("click", ()=>{
-  pillMinimized = !pillMinimized;
-  const reminder = document.getElementById("pillReminder");
-  if(pillMinimized){
-    reminder.style.height="40px";
-    pillTakenBtn.style.display="none";
-  } else {
-    reminder.style.height="auto";
-    pillTakenBtn.style.display="block";
-  }
+const pillTitle=document.getElementById("pillTitle");
+const pillCountdown=document.getElementById("pillCountdown");
+const pillTakenBtn=document.getElementById("pillTakenBtn");
+const pillMinimize=document.getElementById("pillMinimize");
+let pillMinimized=false;
+pillMinimize.addEventListener("click",()=>{
+  pillMinimized=!pillMinimized;
+  const reminder=document.getElementById("pillReminder");
+  if(pillMinimized){ reminder.style.height="40px"; pillTakenBtn.style.display="none"; }
+  else { reminder.style.height="auto"; pillTakenBtn.style.display="block"; }
 });
-
 function updatePillCountdown(){
-  const now=new Date();
-  const pillTime=new Date(); pillTime.setHours(20,0,0,0);
+  const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0);
   if(now>pillTime) pillTime.setDate(pillTime.getDate()+1);
   const diff=pillTime-now;
   const hours=Math.floor(diff/(1000*60*60));
   const mins=Math.floor((diff/(1000*60))%60);
   const lastTaken=localStorage.getItem("pillTakenDate");
   const today=new Date().toDateString();
-  if(lastTaken===today){
-    pillTitle.textContent="✅ Schon genommi heute!";
-    pillCountdown.textContent=`Nächste Pille in ${hours}h ${mins}m 💗`;
-  } else if(now.getHours()>=20){
-    pillTitle.textContent="💊 Nimm die Pille ml!!!!";
-    pillCountdown.textContent="Jetzt ist Zeit 💖";
-  } else {
-    pillTitle.textContent="Pille späti nehmi:";
-    pillCountdown.textContent=`Noch ${hours} Stunden und ${mins} Minuten 💞`;
-  }
+  if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste Pille in ${hours}h ${mins}m 💗`; }
+  else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; }
+  else { pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours} Stunden und ${mins} Minuten 💞`; }
 }
-setInterval(updatePillCountdown,1000*30);
-updatePillCountdown();
-pillTakenBtn.addEventListener("click",()=>{localStorage.setItem("pillTakenDate",new Date().toDateString());updatePillCountdown();});
+setInterval(updatePillCountdown,30000); updatePillCountdown();
+pillTakenBtn.addEventListener("click",()=>{localStorage.setItem("pillTakenDate",new Date().toDateString()); updatePillCountdown();});
 
 // 📝 Notizen
 const notesBtn=document.getElementById("notesButton");
@@ -404,17 +340,13 @@ notesBtn.addEventListener("click",()=>{notesPanel.classList.toggle("open");});
 auth.onAuthStateChanged(user=>{
   if(user){
     const notesRef=db.collection("notes").doc(user.uid);
-    notesRef.get().then(doc=>{if(doc.exists)notesArea.value=doc.data().text||"";});
-    notesArea.addEventListener("input",()=>{notesRef.set({text:notesArea.value});});
+    notesRef.get().then(doc=>{ if(doc.exists) notesArea.value=doc.data().text||""; });
+    notesArea.addEventListener("input",()=>{ notesRef.set({text:notesArea.value}); });
   } else { notesArea.value=""; }
 });
 
 // Galerie Random Image
-const images=[
-  "https://i.imgur.com/m05eQGf.jpeg",
-  "https://i.imgur.com/rp80WsN.jpeg",
-  "https://i.imgur.com/BIxd6ix.jpeg"
-];
+const images=["https://i.imgur.com/m05eQGf.jpeg","https://i.imgur.com/rp80WsN.jpeg","https://i.imgur.com/BIxd6ix.jpeg"];
 const randomImage=document.getElementById("randomImage");
 const changeImageBtn=document.getElementById("changeImageBtn");
 function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
