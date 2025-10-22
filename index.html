@@ -36,6 +36,13 @@ button:hover {transform: scale(1.1); background: #ff85ad;}
   transition: transform 0.3s;
 }
 .gallery img:hover {transform: scale(1.05);}
+.gallery-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
 footer {text-align: center; padding: 20px; color: #888;}
 .heart {
   position: fixed; pointer-events: none; z-index: 9999;
@@ -126,6 +133,17 @@ footer {text-align: center; padding: 20px; color: #888;}
     width: 90%;
   }
   #notesButton { bottom: 10px; left: 5%; width: 90%; }
+  .gallery-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gallery-container img {
+    width: 80%;
+  }
+  .gallery-container button {
+    width: 50%;
+    padding: 10px;
+  }
 }
 </style>
 </head>
@@ -146,10 +164,9 @@ footer {text-align: center; padding: 20px; color: #888;}
 </div>
 
 <h2>📸 Leos und Mios besten Bilder</h2>
-<div class="gallery">
-  <img src="https://i.imgur.com/m05eQGf.jpeg" alt="Lele 1">
-  <img src="https://i.imgur.com/rp80WsN.jpeg" alt="Mimi 1">
-  <img src="https://i.imgur.com/BIxd6ix.jpeg" alt="Lelelele 2">
+<div class="gallery-container">
+  <img id="randomImage" src="" alt="Random Bild">
+  <button id="changeImageBtn">Bild wechseln 💕</button>
 </div>
 
 <div class="game">
@@ -314,12 +331,10 @@ notesBtn.addEventListener("click", ()=>{notesPanel.classList.toggle("open");});
 // Firebase Notizen
 auth.onAuthStateChanged(user=>{
   if(user){
-    // Notizen laden
     const notesRef = db.collection("notes").doc(user.uid);
     notesRef.get().then(doc=>{
       if(doc.exists) notesArea.value = doc.data().text || "";
     });
-    // automatisch speichern
     notesArea.addEventListener("input", ()=>{
       notesRef.set({text: notesArea.value});
     });
@@ -327,6 +342,30 @@ auth.onAuthStateChanged(user=>{
     notesArea.value="";
   }
 });
+
+// 🎨 Random Bild Galerie
+const bilder = [
+  "https://i.imgur.com/m05eQGf.jpeg",
+  "https://i.imgur.com/rp80WsN.jpeg",
+  "https://i.imgur.com/BIxd6ix.jpeg"
+];
+
+function zufallBild() {
+  const index = Math.floor(Math.random() * bilder.length);
+  return bilder[index];
+}
+
+function wechselBild() {
+  const imgEl = document.getElementById("randomImage");
+  let neuesBild;
+  do {
+    neuesBild = zufallBild();
+  } while (neuesBild === imgEl.src);
+  imgEl.src = neuesBild;
+}
+
+document.getElementById("changeImageBtn").addEventListener("click", wechselBild);
+wechselBild();
 </script>
 </body>
 </html>
