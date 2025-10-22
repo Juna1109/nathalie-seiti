@@ -27,22 +27,24 @@ button:hover {transform: scale(1.1); background: #ff85ad;}
 .letter p {color: #333;}
 #countdown {font-size: 20px; margin-top: 10px; color: #ff5c8d;}
 .game {text-align: center; margin: 40px 0; position: relative; height: 150px;}
-.gallery {
-  display: flex; justify-content: center; align-items: center;
-  flex-wrap: wrap; gap: 15px; margin: 20px auto; max-width: 900px;
-}
-.gallery img {
-  width: 250px; border-radius: 15px; box-shadow: 0 0 12px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-}
-.gallery img:hover {transform: scale(1.05);}
 .gallery-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
+  margin: 20px auto;
 }
+.gallery-container img {
+  width: 200px;      /* kleinere Größe */
+  max-width: 90vw;   /* max 90% Breite auf kleinen Bildschirmen */
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+.gallery-container img:hover { transform: scale(1.05); }
+
 footer {text-align: center; padding: 20px; color: #888;}
 .heart {
   position: fixed; pointer-events: none; z-index: 9999;
@@ -138,7 +140,8 @@ footer {text-align: center; padding: 20px; color: #888;}
     gap: 10px;
   }
   .gallery-container img {
-    width: 80%;
+    width: 80%;      /* max 80% der Bildschirmbreite */
+    max-width: 300px;
   }
   .gallery-container button {
     width: 50%;
