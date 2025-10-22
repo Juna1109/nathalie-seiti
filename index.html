@@ -53,7 +53,7 @@ footer {text-align: center; padding: 20px; color: #888;}
   font-size: 20px;
 }
 
-/* 💊 Pille-Reminder oben */
+/* 💊 Pille-Reminder oben rechts */
 #pillReminder {
   position: fixed;
   top: 10px;
@@ -77,21 +77,21 @@ footer {text-align: center; padding: 20px; color: #888;}
 #pillCountdown, #pillTitle { margin-top: 5px; }
 #pillReminder.minimized #pillTakenBtn { display: none; }
 
-/* Love Counter */
+/* Love Counter (oben links) */
 #loveCounter {
   position: fixed;
   top: 50px;
-  right: 10px;
+  left: 10px;
   font-size: 18px;
   color: #d63384;
   z-index: 10001;
 }
 
-/* Love Shop */
+/* Love Shop Button oben links */
 #loveShopBtn {
   position: fixed;
   top: 80px;
-  right: 10px;
+  left: 10px;
   background:#ff6b9b;
   color:white;
   border:none;
@@ -101,11 +101,13 @@ footer {text-align: center; padding: 20px; color: #888;}
   z-index:10001;
 }
 #loveShopBtn:hover {background:#ff85ad; transform: scale(1.05);}
+
+/* Love Shop Panel oben links */
 #loveShop {
   display:none;
   position:fixed;
   top:120px;
-  right:10px;
+  left:10px;
   background:#fff0f6;
   border:2px solid #ffb6c1;
   padding:15px;
@@ -176,8 +178,8 @@ footer {text-align: center; padding: 20px; color: #888;}
   .gallery-container img { width: 80%; max-width: 300px; }
   .gallery-container button { width: 50%; padding: 10px; }
   #pillReminder { top: 5px; right: 5%; width: 90%; padding: 10px; }
-  #loveCounter, #loveShopBtn { right:5%; }
-  #loveShop { right:5%; }
+  #loveCounter, #loveShopBtn { left:5%; right:auto; }
+  #loveShop { left:5%; right:auto; }
 }
 </style>
 </head>
@@ -293,19 +295,17 @@ function createHeart() {
 }
 setInterval(createHeart, 800);
 
-// Love Shop
-document.getElementById("loveShopBtn").addEventListener("click", () => {
+const loveShopBtn = document.getElementById("loveShopBtn");
+loveShopBtn.addEventListener("click", ()=>{
   const shop = document.getElementById("loveShop");
-  shop.style.display = shop.style.display === "none" ? "block" : "none";
+  shop.style.display = shop.style.display==='none'?'block':'none';
 });
-function buyItem(cost, itemName){
+function buyItem(cost,itemName){
   if(lovePoints >= cost){
     lovePoints -= cost;
     updateLoveDisplay();
     alert(`Du hast ${itemName} gekauft 💕`);
-  } else {
-    alert("Nicht genug Liebe 💖");
-  }
+  } else { alert("Nicht genug Liebe 💖"); }
 }
 
 // 💌 Gründe
@@ -322,36 +322,35 @@ const reasons = [
   "Ich bin so stolz, dass du meins bist.",
   "Deine Augen sind so wunderschön."
 ];
-document.getElementById("showReasonBtn").addEventListener("click", () => {
-  document.getElementById("letterText").textContent =
-    reasons[Math.floor(Math.random() * reasons.length)];
+document.getElementById("showReasonBtn").addEventListener("click", ()=>{
+  document.getElementById("letterText").textContent = reasons[Math.floor(Math.random()*reasons.length)];
 });
 
 // 🕓 Countdown
 const targetDate = new Date("2025-10-24T20:00:00");
 const countdownEl = document.getElementById("countdown");
-function updateCountdown() {
+function updateCountdown(){
   const now = new Date();
   const diff = targetDate - now;
-  if (diff <= 0) {countdownEl.textContent = "Endlich sehi 💕"; return;}
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-  const secs = Math.floor((diff / 1000) % 60);
-  countdownEl.textContent = `${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
+  if(diff<=0){countdownEl.textContent="Endlich sehi 💕"; return;}
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff/(1000*60*60))%24);
+  const mins=Math.floor((diff/(1000*60))%60);
+  const secs=Math.floor((diff/1000)%60);
+  countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
 }
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
 
 // 💕 Ja/Nein
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.position = "absolute";
-  noBtn.style.left = Math.random() * 80 + "%";
-  noBtn.style.top = Math.random() * 80 + "%";
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*80+"%";
+  noBtn.style.top=Math.random()*80+"%";
 });
-yesBtn.addEventListener("click", () => alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
+yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
 
 // 💊 Pille
 const pillTitle = document.getElementById("pillTitle");
@@ -359,7 +358,7 @@ const pillCountdown = document.getElementById("pillCountdown");
 const pillTakenBtn = document.getElementById("pillTakenBtn");
 const pillMinimize = document.getElementById("pillMinimize");
 let pillMinimized = false;
-pillMinimize.addEventListener("click", () => {
+pillMinimize.addEventListener("click", ()=>{
   pillMinimized = !pillMinimized;
   const reminder = document.getElementById("pillReminder");
   if(pillMinimized){
@@ -371,16 +370,15 @@ pillMinimize.addEventListener("click", () => {
   }
 });
 
-function updatePillCountdown() {
-  const now = new Date();
-  const pillTime = new Date();
-  pillTime.setHours(20,0,0,0);
-  if(now > pillTime) pillTime.setDate(pillTime.getDate()+1);
-  const diff = pillTime - now;
-  const hours = Math.floor(diff / (1000*60*60));
-  const mins = Math.floor((diff / (1000*60)) % 60);
-  const lastTaken = localStorage.getItem("pillTakenDate");
-  const today = new Date().toDateString();
+function updatePillCountdown(){
+  const now=new Date();
+  const pillTime=new Date(); pillTime.setHours(20,0,0,0);
+  if(now>pillTime) pillTime.setDate(pillTime.getDate()+1);
+  const diff=pillTime-now;
+  const hours=Math.floor(diff/(1000*60*60));
+  const mins=Math.floor((diff/(1000*60))%60);
+  const lastTaken=localStorage.getItem("pillTakenDate");
+  const today=new Date().toDateString();
   if(lastTaken===today){
     pillTitle.textContent="✅ Schon genommi heute!";
     pillCountdown.textContent=`Nächste Pille in ${hours}h ${mins}m 💗`;
@@ -392,37 +390,35 @@ function updatePillCountdown() {
     pillCountdown.textContent=`Noch ${hours} Stunden und ${mins} Minuten 💞`;
   }
 }
-setInterval(updatePillCountdown, 1000*30);
+setInterval(updatePillCountdown,1000*30);
 updatePillCountdown();
-pillTakenBtn.addEventListener("click", ()=>{localStorage.setItem("pillTakenDate", new Date().toDateString());updatePillCountdown();});
+pillTakenBtn.addEventListener("click",()=>{localStorage.setItem("pillTakenDate",new Date().toDateString());updatePillCountdown();});
 
 // 📝 Notizen
-const notesBtn = document.getElementById("notesButton");
-const notesPanel = document.getElementById("notesPanel");
-const notesArea = document.getElementById("notesArea");
-notesBtn.addEventListener("click", ()=>{notesPanel.classList.toggle("open");});
+const notesBtn=document.getElementById("notesButton");
+const notesPanel=document.getElementById("notesPanel");
+const notesArea=document.getElementById("notesArea");
+notesBtn.addEventListener("click",()=>{notesPanel.classList.toggle("open");});
 
 // Firebase Notizen
 auth.onAuthStateChanged(user=>{
   if(user){
-    const notesRef = db.collection("notes").doc(user.uid);
-    notesRef.get().then(doc=>{ if(doc.exists) notesArea.value = doc.data().text || ""; });
-    notesArea.addEventListener("input", ()=>{ notesRef.set({text: notesArea.value}); });
+    const notesRef=db.collection("notes").doc(user.uid);
+    notesRef.get().then(doc=>{if(doc.exists)notesArea.value=doc.data().text||"";});
+    notesArea.addEventListener("input",()=>{notesRef.set({text:notesArea.value});});
   } else { notesArea.value=""; }
 });
 
 // Galerie Random Image
-const images = [
+const images=[
   "https://i.imgur.com/m05eQGf.jpeg",
   "https://i.imgur.com/rp80WsN.jpeg",
   "https://i.imgur.com/BIxd6ix.jpeg"
 ];
-const randomImage = document.getElementById("randomImage");
-const changeImageBtn = document.getElementById("changeImageBtn");
-function setRandomImage(){
-  randomImage.src = images[Math.floor(Math.random()*images.length)];
-}
-changeImageBtn.addEventListener("click", setRandomImage);
+const randomImage=document.getElementById("randomImage");
+const changeImageBtn=document.getElementById("changeImageBtn");
+function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
+changeImageBtn.addEventListener("click",setRandomImage);
 setRandomImage();
 </script>
 </body>
