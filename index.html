@@ -46,8 +46,11 @@ button:hover {transform: scale(1.1); background: #ff85ad;}
 .gallery-container img:hover { transform: scale(1.05); }
 footer {text-align: center; padding: 20px; color: #888;}
 .heart {
-  position: fixed; pointer-events: none; z-index: 9999;
+  position: fixed; pointer-events: auto; z-index: 9999;
   opacity: 0.9; will-change: transform, opacity;
+  cursor: pointer;
+  user-select: none;
+  font-size: 20px;
 }
 
 /* 💊 Pille-Reminder oben */
@@ -73,6 +76,42 @@ footer {text-align: center; padding: 20px; color: #888;}
 }
 #pillCountdown, #pillTitle { margin-top: 5px; }
 #pillReminder.minimized #pillTakenBtn { display: none; }
+
+/* Love Counter */
+#loveCounter {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  font-size: 18px;
+  color: #d63384;
+  z-index: 10001;
+}
+
+/* Love Shop */
+#loveShopBtn {
+  position: fixed;
+  top: 80px;
+  right: 10px;
+  background:#ff6b9b;
+  color:white;
+  border:none;
+  border-radius:25px;
+  padding:5px 15px;
+  cursor:pointer;
+  z-index:10001;
+}
+#loveShopBtn:hover {background:#ff85ad; transform: scale(1.05);}
+#loveShop {
+  display:none;
+  position:fixed;
+  top:120px;
+  right:10px;
+  background:#fff0f6;
+  border:2px solid #ffb6c1;
+  padding:15px;
+  border-radius:10px;
+  z-index:10002;
+}
 
 /* 📝 Notizen */
 #notesButton {
@@ -137,6 +176,8 @@ footer {text-align: center; padding: 20px; color: #888;}
   .gallery-container img { width: 80%; max-width: 300px; }
   .gallery-container button { width: 50%; padding: 10px; }
   #pillReminder { top: 5px; right: 5%; width: 90%; padding: 10px; }
+  #loveCounter, #loveShopBtn { right:5%; }
+  #loveShop { right:5%; }
 }
 </style>
 </head>
@@ -176,6 +217,18 @@ footer {text-align: center; padding: 20px; color: #888;}
   <button id="pillTakenBtn">Hab genommi 😇</button>
 </div>
 
+<!-- Love Counter -->
+<div id="loveCounter">Liebe: 0 💖</div>
+<!-- Love Shop -->
+<button id="loveShopBtn">Love Shop 💕</button>
+<div id="loveShop">
+  <h3>Love Shop 💖</h3>
+  <button onclick="buyItem(10,'Mini Date')">Mini Date - 10 💖</button><br>
+  <button onclick="buyItem(25,'Ice Cream Date')">Ice Cream Date - 25 💖</button><br>
+  <button onclick="buyItem(50,'Movie Date')">Movie Date - 50 💖</button><br>
+  <button onclick="document.getElementById('loveShop').style.display='none'">Schließen</button>
+</div>
+
 <!-- 📝 Notizen -->
 <button id="notesButton">📝 Notizen</button>
 <div id="notesPanel">
@@ -203,7 +256,11 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// 💖 Herzchen
+// 💖 Herzchen Spiel
+let lovePoints = 0;
+function updateLoveDisplay() {
+  document.getElementById("loveCounter").textContent = `Liebe: ${lovePoints} 💖`;
+}
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -213,6 +270,13 @@ function createHeart() {
   heart.style.left = Math.random() * window.innerWidth + "px";
   heart.style.top = "-50px";
   document.body.appendChild(heart);
+
+  heart.addEventListener("click", () => {
+    lovePoints += 1;
+    updateLoveDisplay();
+    heart.remove();
+  });
+
   const endY = window.innerHeight + 50;
   const duration = Math.random() * 4000 + 4000;
   let start = null;
@@ -227,7 +291,22 @@ function createHeart() {
   }
   requestAnimationFrame(animateHeart);
 }
-setInterval(createHeart, 400);
+setInterval(createHeart, 800);
+
+// Love Shop
+document.getElementById("loveShopBtn").addEventListener("click", () => {
+  const shop = document.getElementById("loveShop");
+  shop.style.display = shop.style.display === "none" ? "block" : "none";
+});
+function buyItem(cost, itemName){
+  if(lovePoints >= cost){
+    lovePoints -= cost;
+    updateLoveDisplay();
+    alert(`Du hast ${itemName} gekauft 💕`);
+  } else {
+    alert("Nicht genug Liebe 💖");
+  }
+}
 
 // 💌 Gründe
 const reasons = [
@@ -280,12 +359,16 @@ const pillCountdown = document.getElementById("pillCountdown");
 const pillTakenBtn = document.getElementById("pillTakenBtn");
 const pillMinimize = document.getElementById("pillMinimize");
 let pillMinimized = false;
-
 pillMinimize.addEventListener("click", () => {
-  const reminder = document.getElementById("pillReminder");
   pillMinimized = !pillMinimized;
-  if(pillMinimized) reminder.classList.add("minimized");
-  else reminder.classList.remove("minimized");
+  const reminder = document.getElementById("pillReminder");
+  if(pillMinimized){
+    reminder.style.height="40px";
+    pillTakenBtn.style.display="none";
+  } else {
+    reminder.style.height="auto";
+    pillTakenBtn.style.display="block";
+  }
 });
 
 function updatePillCountdown() {
@@ -311,10 +394,7 @@ function updatePillCountdown() {
 }
 setInterval(updatePillCountdown, 1000*30);
 updatePillCountdown();
-pillTakenBtn.addEventListener("click", ()=>{
-  localStorage.setItem("pillTakenDate", new Date().toDateString());
-  updatePillCountdown();
-});
+pillTakenBtn.addEventListener("click", ()=>{localStorage.setItem("pillTakenDate", new Date().toDateString());updatePillCountdown();});
 
 // 📝 Notizen
 const notesBtn = document.getElementById("notesButton");
@@ -326,40 +406,24 @@ notesBtn.addEventListener("click", ()=>{notesPanel.classList.toggle("open");});
 auth.onAuthStateChanged(user=>{
   if(user){
     const notesRef = db.collection("notes").doc(user.uid);
-    notesRef.get().then(doc=>{
-      if(doc.exists) notesArea.value = doc.data().text || "";
-    });
-    notesArea.addEventListener("input", ()=>{
-      notesRef.set({text: notesArea.value});
-    });
-  } else {
-    notesArea.value="";
-  }
+    notesRef.get().then(doc=>{ if(doc.exists) notesArea.value = doc.data().text || ""; });
+    notesArea.addEventListener("input", ()=>{ notesRef.set({text: notesArea.value}); });
+  } else { notesArea.value=""; }
 });
 
-// 🎨 Random Bild Galerie
-const bilder = [
+// Galerie Random Image
+const images = [
   "https://i.imgur.com/m05eQGf.jpeg",
   "https://i.imgur.com/rp80WsN.jpeg",
   "https://i.imgur.com/BIxd6ix.jpeg"
 ];
-
-function zufallBild() {
-  const index = Math.floor(Math.random() * bilder.length);
-  return bilder[index];
+const randomImage = document.getElementById("randomImage");
+const changeImageBtn = document.getElementById("changeImageBtn");
+function setRandomImage(){
+  randomImage.src = images[Math.floor(Math.random()*images.length)];
 }
-
-function wechselBild() {
-  const imgEl = document.getElementById("randomImage");
-  let neuesBild;
-  do {
-    neuesBild = zufallBild();
-  } while (neuesBild === imgEl.src);
-  imgEl.src = neuesBild;
-}
-
-document.getElementById("changeImageBtn").addEventListener("click", wechselBild);
-wechselBild();
+changeImageBtn.addEventListener("click", setRandomImage);
+setRandomImage();
 </script>
 </body>
 </html>
