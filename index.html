@@ -5,142 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Für dich ❤️</title>
 <style>
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom right, #ffe6f0, #fff);
-  overflow-x: hidden;
-}
-h1, h2, p {text-align: center; color: #d63384;}
-button {
-  background: #ff6b9b; border: none; color: white;
-  padding: 10px 20px; border-radius: 25px; cursor: pointer;
-  transition: transform 0.3s;
-}
-button:hover {transform: scale(1.1); background: #ff85ad;}
-.letter {
-  background: #fff0f6; border: 2px solid #ffb6c1;
-  border-radius: 15px; padding: 20px; margin: 40px auto;
-  width: 80%; max-width: 400px; text-align: center;
-  box-shadow: 0 0 15px rgba(255,182,193,0.4);
-}
-.letter p {color: #333;}
-#countdown {font-size: 20px; margin-top: 10px; color: #ff5c8d;}
-.game {text-align: center; margin: 40px 0; position: relative; height: 150px;}
-.gallery {
-  display: flex; justify-content: center; align-items: center;
-  flex-wrap: wrap; gap: 15px; margin: 20px auto; max-width: 900px;
-}
-.gallery img {
-  width: 250px; border-radius: 15px; box-shadow: 0 0 12px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-}
-.gallery img:hover {transform: scale(1.05);}
-footer {text-align: center; padding: 20px; color: #888;}
-.heart {
-  position: fixed; pointer-events: none; z-index: 9999;
-  opacity: 0.9; will-change: transform, opacity;
-}
-
-/* 💊 Erinnerung unten rechts */
-#pillReminder {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #fff0f6;
-  border: 2px solid #ffb6c1;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(255,182,193,0.7);
-  padding: 20px;
-  text-align: center;
-  z-index: 10000;
-  width: 250px;
-  animation: fadeIn 0.8s ease;
-}
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-#pillCountdown {
-  font-size: 18px;
-  color: #d63384;
-  margin-top: 10px;
-}
-
-/* 📝 Notizen-Button + Panel */
-#notesButton {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #ff85ad;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  font-size: 16px;
-  z-index: 10000;
-  transition: background 0.3s, transform 0.2s;
-}
-#notesButton:hover {
-  background: #ff5c8d;
-  transform: scale(1.05);
-}
-#notesPanel {
-  position: fixed;
-  bottom: 70px;
-  left: 20px;
-  width: 280px;
-  height: 260px;
-  background: #fff0f6;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
-}
-#notesPanel.open {
-  display: flex;
-  animation: slideUp 0.3s ease-out;
-}
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-#notesPanel textarea {
-  flex: 1;
-  margin: 10px;
-  border-radius: 10px;
-  border: 1px solid #ffb6c1;
-  padding: 8px;
-  resize: none;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-}
-#notesPanel h3 {
-  text-align: center;
-  color: #d63384;
-  margin-top: 10px;
-}
-
-/* Login/Register Panel */
-#authPanel {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #fff0f6;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  padding: 15px;
-  z-index: 10001;
-  width: 250px;
-}
-#authPanel input {width: 100%; margin: 5px 0; padding: 5px; border-radius: 10px; border: 1px solid #ffb6c1;}
-#authPanel button {width: 100%; margin: 5px 0;}
-#logoutBtn {display:none; background:#d63384;}
+body { margin:0; font-family:"Poppins",sans-serif; background:linear-gradient(to bottom right,#ffe6f0,#fff); overflow-x:hidden; }
+h1,h2,p{text-align:center;color:#d63384;}
+button{background:#ff6b9b;border:none;color:white;padding:10px 20px;border-radius:25px;cursor:pointer;transition:transform 0.3s;}
+button:hover{transform:scale(1.1);background:#ff85ad;}
+.letter{background:#fff0f6;border:2px solid #ffb6c1;border-radius:15px;padding:20px;margin:40px auto;width:80%;max-width:400px;text-align:center;box-shadow:0 0 15px rgba(255,182,193,0.4);}
+.letter p{color:#333;}
+#countdown{font-size:20px;margin-top:10px;color:#ff5c8d;}
+.game{text-align:center;margin:40px 0;position:relative;height:150px;}
+.gallery{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:15px;margin:20px auto;max-width:900px;}
+.gallery img{width:250px;border-radius:15px;box-shadow:0 0 12px rgba(0,0,0,0.2);transition:transform 0.3s;}
+.gallery img:hover{transform:scale(1.05);}
+footer{text-align:center;padding:20px;color:#888;}
+.heart{position:fixed;pointer-events:none;z-index:9999;opacity:0.9;will-change:transform,opacity;}
+#pillReminder{position:fixed;bottom:20px;right:20px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:15px;box-shadow:0 0 20px rgba(255,182,193,0.7);padding:20px;text-align:center;z-index:10000;width:250px;animation:fadeIn 0.8s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+#pillCountdown{font-size:18px;color:#d63384;margin-top:10px;}
+#notesButton{position:fixed;bottom:20px;left:20px;background:#ff85ad;color:white;border:none;border-radius:30px;padding:10px 20px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.2);font-size:16px;z-index:10000;transition:background 0.3s,transform 0.2s;}
+#notesButton:hover{background:#ff5c8d;transform:scale(1.05);}
+#notesPanel{position:fixed;bottom:70px;left:20px;width:280px;height:260px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,0.2);display:none;flex-direction:column;overflow:hidden;z-index:9999;}
+#notesPanel.open{display:flex;animation:slideUp 0.3s ease-out;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+#notesPanel textarea{flex:1;margin:10px;border-radius:10px;border:1px solid #ffb6c1;padding:8px;resize:none;font-family:"Poppins",sans-serif;font-size:14px;}
+#notesPanel h3{text-align:center;color:#d63384;margin-top:10px;}
+#authPanel{position:fixed;top:20px;right:20px;width:200px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:20px;padding:15px;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:10000;}
+#authPanel input{width:100%;margin-bottom:10px;padding:8px;border-radius:10px;border:1px solid #ffb6c1;}
+#authPanel button{width:100%;margin-bottom:5px;}
 </style>
 </head>
 <body>
@@ -186,23 +76,24 @@ footer {text-align: center; padding: 20px; color: #888;}
   <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..."></textarea>
 </div>
 
-<!-- Login/Register -->
+<!-- 🔐 Auth -->
 <div id="authPanel">
-  <input type="email" id="emailInput" placeholder="E-Mail">
-  <input type="password" id="passwordInput" placeholder="Passwort">
-  <button id="registerBtn">Registrieren</button>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Passwort">
+  <button id="signupBtn">Registrieren</button>
   <button id="loginBtn">Anmelden</button>
-  <button id="logoutBtn">Abmelden</button>
+  <button id="logoutBtn" style="display:none;">Abmelden</button>
+  <p id="authStatus" style="text-align:center;color:#d63384;"></p>
 </div>
 
 <footer><p>Mit Liebe gemacht von justini 💕</p></footer>
 
 <!-- Firebase SDK -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
+<script>
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDJl-UVkVFCj-CfDiXcYBbVRoT9WpboXOs",
@@ -212,12 +103,12 @@ const firebaseConfig = {
   messagingSenderId: "627451220911",
   appId: "1:627451220911:web:63357b6799f075bacfd55a"
 };
+firebase.initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// 💖 Herzchen fliegen automatisch
+// 💖 Herzchen
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -227,23 +118,21 @@ function createHeart() {
   heart.style.left = Math.random() * window.innerWidth + "px";
   heart.style.top = "-50px";
   document.body.appendChild(heart);
-
   const endY = window.innerHeight + 50;
   const duration = Math.random() * 4000 + 4000;
   let start = null;
-
   function animateHeart(timestamp) {
     if (!start) start = timestamp;
     const progress = timestamp - start;
     const fraction = progress / duration;
-    heart.style.transform = `translateY(${fraction * endY}px) rotate(${fraction * 360}deg)`;
+    heart.style.transform = `translateY(${fraction * endY}px) rotate(${fraction*360}deg)`;
     heart.style.opacity = 1 - fraction;
-    if (fraction < 1) requestAnimationFrame(animateHeart);
+    if(fraction<1) requestAnimationFrame(animateHeart);
     else heart.remove();
   }
   requestAnimationFrame(animateHeart);
 }
-setInterval(createHeart, 400);
+setInterval(createHeart,400);
 
 // 💌 Gründe
 const reasons = [
@@ -259,122 +148,118 @@ const reasons = [
   "Ich bin so stolz, dass du meins bist.",
   "Deine Augen sind so wunderschön."
 ];
-document.getElementById("showReasonBtn").addEventListener("click", () => {
-  document.getElementById("letterText").textContent =
-    reasons[Math.floor(Math.random() * reasons.length)];
+document.getElementById("showReasonBtn").addEventListener("click",()=>{
+  document.getElementById("letterText").textContent=reasons[Math.floor(Math.random()*reasons.length)];
 });
 
-// 🕓 Countdown bis Treffen
+// 🕓 Countdown
 const targetDate = new Date("2025-10-24T20:00:00");
 const countdownEl = document.getElementById("countdown");
-function updateCountdown() {
+function updateCountdown(){
   const now = new Date();
   const diff = targetDate - now;
-  if (diff <= 0) {countdownEl.textContent = "Endlich sehi 💕"; return;}
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-  const secs = Math.floor((diff / 1000) % 60);
-  countdownEl.textContent = `${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
+  if(diff<=0){countdownEl.textContent="Endlich sehi 💕";return;}
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff/(1000*60*60))%24);
+  const mins=Math.floor((diff/(1000*60))%60);
+  const secs=Math.floor((diff/1000)%60);
+  countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min, ${secs} Sek`;
 }
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
 
-// 💕 Ja/Nein-Spiel
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.position = "absolute";
-  noBtn.style.left = Math.random() * 80 + "%";
-  noBtn.style.top = Math.random() * 80 + "%";
+// 💕 Ja/Nein
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*80+"%";
+  noBtn.style.top=Math.random()*80+"%";
 });
-yesBtn.addEventListener("click", () => alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
+yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
 
-// 💊 Pille Countdown
-const pillTitle = document.getElementById("pillTitle");
-const pillCountdown = document.getElementById("pillCountdown");
-const pillTakenBtn = document.getElementById("pillTakenBtn");
-
-function updatePillCountdown() {
-  const now = new Date();
-  const pillTime = new Date();
-  pillTime.setHours(20, 0, 0, 0);
-
-  if (now > pillTime) pillTime.setDate(pillTime.getDate() + 1);
-
-  const diff = pillTime - now;
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-
-  const lastTaken = localStorage.getItem("pillTakenDate");
-  const today = new Date().toDateString();
-
-  if (lastTaken === today) {
-    pillTitle.textContent = "✅ Schon genommi heute!";
-    pillCountdown.textContent = `Nächste Pille in ${hours}h ${mins}m 💗`;
-  } else if (now.getHours() >= 20) {
-    pillTitle.textContent = "💊 Nimm die Pille ml!!!!";
-    pillCountdown.textContent = "Jetzt ist Zeit 💖";
-  } else {
-    pillTitle.textContent = "Pille späti nehmi:";
-    pillCountdown.textContent = `Noch ${hours} Stunden und ${mins} Minuten 💞`;
+// 💊 Pille
+const pillTitle=document.getElementById("pillTitle");
+const pillCountdown=document.getElementById("pillCountdown");
+const pillTakenBtn=document.getElementById("pillTakenBtn");
+function updatePillCountdown(){
+  const now=new Date();
+  const pillTime=new Date();
+  pillTime.setHours(20,0,0,0);
+  if(now>pillTime) pillTime.setDate(pillTime.getDate()+1);
+  const diff=pillTime-now;
+  const hours=Math.floor(diff/(1000*60*60));
+  const mins=Math.floor((diff/(1000*60))%60);
+  const lastTaken=localStorage.getItem("pillTakenDate");
+  const today=new Date().toDateString();
+  if(lastTaken===today){
+    pillTitle.textContent="✅ Schon genommi heute!";
+    pillCountdown.textContent=`Nächste Pille in ${hours}h ${mins}m 💗`;
+  }else if(now.getHours()>=20){
+    pillTitle.textContent="💊 Nimm die Pille ml!!!!";
+    pillCountdown.textContent="Jetzt ist Zeit 💖";
+  }else{
+    pillTitle.textContent="Pille späti nehmi:";
+    pillCountdown.textContent=`Noch ${hours} Stunden und ${mins} Minuten 💞`;
   }
 }
-setInterval(updatePillCountdown, 1000 * 30);
+setInterval(updatePillCountdown,1000*30);
 updatePillCountdown();
-
-pillTakenBtn.addEventListener("click", () => {
-  localStorage.setItem("pillTakenDate", new Date().toDateString());
+pillTakenBtn.addEventListener("click",()=>{
+  localStorage.setItem("pillTakenDate",new Date().toDateString());
   updatePillCountdown();
 });
 
-// 📝 Notizen öffnen/schließen
-const notesBtn = document.getElementById("notesButton");
-const notesPanel = document.getElementById("notesPanel");
-const notesArea = document.getElementById("notesArea");
-notesBtn.addEventListener("click", () => notesPanel.classList.toggle("open"));
+// 📝 Notizen + Firestore
+const notesBtn=document.getElementById("notesButton");
+const notesPanel=document.getElementById("notesPanel");
+const notesArea=document.getElementById("notesArea");
 
-// 🔑 Authentication
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
-const registerBtn = document.getElementById("registerBtn");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
+notesBtn.addEventListener("click",()=>notesPanel.classList.toggle("open"));
 
-registerBtn.addEventListener("click", () => {
-  createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-    .then(() => alert("Registrierung erfolgreich!"))
-    .catch((error) => alert(error.message));
-});
+let currentUID=null;
 
-loginBtn.addEventListener("click", () => {
-  signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-    .then(() => alert("Erfolgreich angemeldet!"))
-    .catch((error) => alert(error.message));
-});
-
-logoutBtn.addEventListener("click", () => {
-  signOut(auth);
-});
-
-// 🔒 Firestore Notizen
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    logoutBtn.style.display = "block";
-    const notesRef = doc(db, "notes", user.uid);
-    const docSnap = await getDoc(notesRef);
-    notesArea.value = docSnap.exists() ? docSnap.data().text || "" : "";
-
-    // Listener für Live-Speichern
-    notesArea.oninput = async () => {
-      await setDoc(notesRef, { text: notesArea.value });
-    };
-  } else {
-    logoutBtn.style.display = "none";
-    notesArea.value = "";
-    notesArea.oninput = null;
+auth.onAuthStateChanged(user=>{
+  if(user){
+    currentUID=user.uid;
+    document.getElementById("authStatus").textContent="Angemeldet: "+user.email;
+    document.getElementById("logoutBtn").style.display="block";
+    document.getElementById("signupBtn").style.display="none";
+    document.getElementById("loginBtn").style.display="none";
+    // Notizen laden
+    db.collection("notes").doc(currentUID).get().then(doc=>{
+      if(doc.exists) notesArea.value=doc.data().text;
+    });
+  }else{
+    currentUID=null;
+    document.getElementById("authStatus").textContent="Nicht angemeldet";
+    document.getElementById("logoutBtn").style.display="none";
+    document.getElementById("signupBtn").style.display="block";
+    document.getElementById("loginBtn").style.display="block";
+    notesArea.value="";
   }
 });
+
+// Notizen speichern
+notesArea.addEventListener("input",()=>{
+  if(currentUID){
+    db.collection("notes").doc(currentUID).set({text:notesArea.value});
+  }
+});
+
+// 🔐 Auth Buttons
+document.getElementById("signupBtn").addEventListener("click",()=>{
+  const email=document.getElementById("email").value;
+  const pass=document.getElementById("password").value;
+  auth.createUserWithEmailAndPassword(email,pass).catch(err=>alert(err.message));
+});
+document.getElementById("loginBtn").addEventListener("click",()=>{
+  const email=document.getElementById("email").value;
+  const pass=document.getElementById("password").value;
+  auth.signInWithEmailAndPassword(email,pass).catch(err=>alert(err.message));
+});
+document.getElementById("logoutBtn").addEventListener("click",()=>auth.signOut());
+
 </script>
 </body>
 </html>
