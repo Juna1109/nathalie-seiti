@@ -224,15 +224,68 @@
 
   // Love Shop
   function buyItem(cost,name){ if(!currentUser){alert("Bitte anmelden, um etwas zu kaufen."); return;} if(lovePoints>=cost){ lovePoints-=cost; setLoveDisplay(); debounceSaveLove(); alert(`Du hast ${name} gekauft 💕`);} else alert("Nicht genug Liebe 💖"); }
-  loveShopBtn.addEventListener("click",()=>{
-    const box=document.createElement("div"); box.style.position="fixed"; box.style.left="50%"; box.style.top="50%"; box.style.transform="translate(-50%,-50%)";
-    box.style.zIndex=13000; box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6";
-    box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
-    box.innerHTML=`<button id="b1">Kiss - 25 💖</button><button id="b2">Filmeabend - 100 💖</button><button id="b3">Kino Date - 500 💖</button>`;
+
+  function renderLoveShop(){
+    if(!currentUser){ alert("Bitte anmelden, um etwas zu kaufen."); return; }
+    const box = document.createElement("div");
+    box.style.position = "fixed";
+    box.style.left = "50%";
+    box.style.top = "50%";
+    box.style.transform = "translate(-50%, -50%)";
+    box.style.zIndex = 13000;
+    box.style.padding = "16px";
+    box.style.borderRadius = "14px";
+    box.style.background = "#fff0f6";
+    box.style.border = "2px solid #ffb6c1";
+    box.style.display = "flex";
+    box.style.flexDirection = "column";
+    box.style.gap = "10px";
+    box.style.minWidth = "220px";
+    box.style.textAlign = "center";
+    box.style.boxShadow = "0 8px 24px rgba(0,0,0,0.15)";
+
+    const items = [
+      { name: "Kiss", cost: 25, color: "#ff6b9b" },
+      { name: "Filmeabend", cost: 100, color: "#ff85ad" },
+      { name: "Kino Date", cost: 500, color: "#d63384" }
+    ];
+
+    items.forEach(item => {
+      const btn = document.createElement("button");
+      btn.textContent = `${item.name} - ${item.cost} 💖`;
+      btn.style.background = lovePoints >= item.cost ? item.color : "#ccc";
+      btn.style.color = "#fff";
+      btn.style.border = "none";
+      btn.style.padding = "8px 12px";
+      btn.style.borderRadius = "12px";
+      btn.style.cursor = lovePoints >= item.cost ? "pointer" : "not-allowed";
+      btn.style.transition = "all 0.18s";
+      btn.disabled = lovePoints < item.cost;
+
+      btn.addEventListener("mouseenter", ()=>{ if(!btn.disabled) btn.style.transform="scale(1.05)"; });
+      btn.addEventListener("mouseleave", ()=> btn.style.transform="scale(1)");
+
+      btn.addEventListener("click", ()=>{
+        if(!btn.disabled) { buyItem(item.cost, item.name); box.remove(); }
+      });
+
+      box.appendChild(btn);
+    });
+
     document.body.appendChild(box);
-    box.addEventListener("click", (e)=>{ if(e.target.id==="b1"){ buyItem(10,"Mini Date"); box.remove(); } if(e.target.id==="b2"){ buyItem(25,"Ice Cream Date"); box.remove(); } if(e.target.id==="b3"){ buyItem(50,"Movie Date"); box.remove(); } });
-    setTimeout(()=>{ window.addEventListener("click", function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
-  });
+
+    // Click outside to close
+    setTimeout(()=>{
+      window.addEventListener("click", function closer(ev){
+        if(!box.contains(ev.target)){
+          box.remove();
+          window.removeEventListener("click", closer);
+        }
+      });
+    }, 100);
+  }
+
+  loveShopBtn.addEventListener("click", renderLoveShop);
 
   // Pill
   function updatePillCountdown(){ const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0); if(now>pillTime) pillTime.setDate(pillTime.getDate()+1); const diff=pillTime-now; const hours=Math.floor(diff/3600000); const mins=Math.floor((diff/60000)%60); const lastTaken=localStorage.getItem("pillTakenDate"); const today=new Date().toDateString(); if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`; } else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; } else{ pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`; } }
@@ -281,7 +334,6 @@
     "https://i.imgur.com/m05eQGf.jpeg",
     "https://i.imgur.com/rp80WsN.jpeg",
     "https://i.imgur.com/BIxd6ix.jpeg",
-  
   ];
   function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
   changeImageBtn.addEventListener("click", setRandomImage);
@@ -293,4 +345,3 @@
   </script>
 </body>
 </html>
-
