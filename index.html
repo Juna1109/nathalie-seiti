@@ -11,6 +11,7 @@
     --bg1:#ffe6f0;
     --card:#fff0f6;
     --accent:#d63384;
+    --green:#28a745;
   }
   *{box-sizing:border-box}
   body{
@@ -21,15 +22,19 @@
     -webkit-font-smoothing:antialiased;
   }
   h1,h2,p{text-align:center;margin:0 0 .6rem}
-  button{background:var(--pink);border:none;color:#fff;padding:.6rem 1rem;border-radius:24px;cursor:pointer;transition:all .18s}
+  button{
+    background:var(--pink);border:none;color:#fff;padding:.6rem 1rem;border-radius:24px;
+    cursor:pointer;transition:all .18s;font-size:1rem
+  }
   button:hover{transform:scale(1.03);background:var(--pink-2)}
   .center{max-width:980px;margin:18px auto;padding:0 16px}
-  .card{background:var(--card);border:2px solid #ffb6c1;border-radius:14px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,0.06);margin:12px auto}
+  .card{background:var(--card);border:2px solid #ffb6c1;border-radius:14px;padding:16px;
+        box-shadow:0 6px 20px rgba(0,0,0,0.06);margin:12px auto;text-align:center;}
   .gallery{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:12px 0}
   .gallery img{width:320px;max-width:90vw;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);transition:transform .2s}
   .gallery img:hover{transform:scale(1.02)}
   #menuButton{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--pink-2);box-shadow:0 8px 24px rgba(0,0,0,0.18);color:#fff;cursor:pointer;z-index:12000}
-  #menuPanel{position:fixed;right:18px;bottom:90px;width:270px;border-radius:14px;padding:12px;display:none;background:var(--card);z-index:12000;border:2px solid #ffb6c1;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
+  #menuPanel{position:fixed;right:18px;bottom:90px;width:300px;border-radius:14px;padding:12px;display:none;background:var(--card);z-index:12000;border:2px solid #ffb6c1;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
   #menuPanel.open{display:flex;flex-direction:column;gap:8px}
   #menuPanel .small{font-size:.95rem;padding:.6rem;border-radius:10px;background:#fff;border:1px solid #ffdfe8;text-align:center}
   #notesPanel{position:fixed;left:5%;right:5%;bottom:22px;height:270px;background:var(--card);border-radius:14px;padding:10px;display:none;z-index:11999;box-shadow:0 8px 30px rgba(0,0,0,0.12);border:2px solid #ffb6c1}
@@ -40,15 +45,14 @@
   .yesno-wrap{position:relative; min-height:100px}
   #yesBtn{z-index:2}
   #noBtn{position:absolute;z-index:3;cursor:default;}
-  #leaderboardContainer{position:fixed;top:18px;right:18px;width:200px;background:var(--card);border:2px solid #ffb6c1;border-radius:14px;padding:12px;z-index:13000;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-  #leaderboardContainer h4{margin:0 0 6px 0;font-size:1rem}
-  #purchaseLog{max-height:200px;overflow-y:auto;border-top:1px solid #ffb6c1;margin-top:6px;padding-top:6px;font-size:.9rem;}
+  #leaderboardPanel, #purchasesPanel{position:fixed;top:18px;right:18px;width:200px;background:#fff0f6;padding:12px;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,0.1);border:2px solid #ffb6c1;z-index:12001;font-size:0.95rem}
+  #purchasesPanel{top:auto;bottom:18px;}
   @media (max-width:600px){
     .gallery img{width:88vw}
     #menuPanel{right:6%;width:88%}
     #menuButton{right:6%}
     #notesPanel{left:4%;right:4%;height:220px}
-    #leaderboardContainer{width:88%}
+    #leaderboardPanel,#purchasesPanel{width:150px}
   }
 </style>
 </head>
@@ -61,8 +65,8 @@
     <div class="card letter">
       <h2>💌 13 (or more) reasons why</h2>
       <p id="letterText">Ein Bruchteil der Gründe wieso ich dich liebe.</p>
-      <div style="margin-top:10px;text-align:center;">
-        <button id="showReasonBtn">Zeig mir einen Grund 💕</button>
+      <div style="margin-top:10px">
+        <button id="showReasonBtn" style="margin:0 auto;display:block">Zeig mir einen Grund 💕</button>
       </div>
     </div>
 
@@ -100,23 +104,23 @@
       <div style="margin-top:8px"><button id="pillTakenBtn">Hab genommi 😇</button></div>
     </div>
     <div id="loveCounter" class="small">Liebe: 0 💖</div>
-    <button id="loveShopBtn" class="small">Love Shop 💕</button>
+    <button id="loveShopBtn" class="small" style="background:var(--green)">Love Shop 💕</button>
     <div id="authControls" style="margin-top:8px"></div>
-    <div id="notesPanel" aria-hidden="true">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px">
-        <h3 style="margin:0">Paladins Ideen 💡</h3>
-        <button id="closeNotesBtn" style="background:#ffb6c1;color:#fff;padding:6px 10px;border-radius:10px">Schließen</button>
-      </div>
-      <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..." aria-label="Notizen"></textarea>
-    </div>
+    <button id="openNotesBtn" class="small">Notizen öffnen 📝</button>
   </div>
 
-  <!-- Leaderboard -->
-  <div id="leaderboardContainer">
-    <h4>Leaderboard 💖</h4>
-    <ol id="leaderboardList" style="padding-left:16px;margin:0 0 6px 0"></ol>
-    <div id="purchaseLog"></div>
+  <!-- Notes panel -->
+  <div id="notesPanel" aria-hidden="true">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px">
+      <h3 style="margin:0">Paladins Ideen 💡</h3>
+      <button id="closeNotesBtn" style="background:#ffb6c1;color:#fff;padding:6px 10px;border-radius:10px">Schließen</button>
+    </div>
+    <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..." aria-label="Notizen"></textarea>
   </div>
+
+  <!-- Leaderboard & Purchases -->
+  <div id="leaderboardPanel"><h4>Leaderboard 💖</h4><ol id="leaderboardList" style="padding-left:16px;margin:0"></ol></div>
+  <div id="purchasesPanel"><h4>Käufe 💕</h4><ol id="purchasesList" style="padding-left:16px;margin:0"></ol></div>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -136,14 +140,16 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  // UI refs
   const menuButton = document.getElementById("menuButton");
   const menuPanel = document.getElementById("menuPanel");
   const notesPanel = document.getElementById("notesPanel");
+  const openNotesBtn = document.getElementById("openNotesBtn");
   const closeNotesBtn = document.getElementById("closeNotesBtn");
   const notesArea = document.getElementById("notesArea");
   const loveCounterEl = document.getElementById("loveCounter");
   const leaderboardList = document.getElementById("leaderboardList");
-  const purchaseLog = document.getElementById("purchaseLog");
+  const purchasesList = document.getElementById("purchasesList");
   const loveShopBtn = document.getElementById("loveShopBtn");
   const pillTitle = document.getElementById("pillTitle");
   const pillCountdown = document.getElementById("pillCountdown");
@@ -156,44 +162,81 @@
   const showReasonBtn = document.getElementById("showReasonBtn");
   const letterText = document.getElementById("letterText");
 
+  let currentUser = null;
+  let lovePoints = 0;
+  let username = null;
+  let heartIntervalId = null;
+
   const images=[
     "https://i.imgur.com/m05eQGf.jpeg",
     "https://i.imgur.com/rp80WsN.jpeg",
-    "https://i.imgur.com/BIxd6ix.jpeg"
+    "https://i.imgur.com/BIxd6ix.jpeg",
   ];
+  function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
+  changeImageBtn.addEventListener("click", setRandomImage);
+  setRandomImage();
+  randomImage.addEventListener("error", ()=>{ randomImage.src=images[0]; });
 
-  let currentUser = null;
-  let lovePoints = 0;
-  let heartIntervalId = null;
-  let notesSaveTimer = null;
+  const reasons=[
+    "Du bist die erste Person, die ich immer bei mir will.",
+    "Du bist das erste, an das ich morgens denke.",
+    "Du hast so lange auf mich gewartet <3.",
+    "Du bist so süß und lieb.",
+    "Du machst mich einfach glücklich.",
+    "Du bist der Grund, warum ich lächle.",
+    "Ich liebe deine Art zu lachen.",
+    "Ich freue mich jedes Mal, dich zu sehen.",
+    "Du bist wunderschön.",
+    "Ich bin so stolz, dass du meins bist.",
+    "Deine Augen sind so wunderschön",
+    "Ich liebe dich, weil du mich verstehst.",
+    "Ich liebe dein Lächeln.",
+    "Du akzeptierst mich",
+  ];
+  showReasonBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
 
-  // Utils
-  function setLoveDisplay(){ loveCounterEl.textContent = `Liebe: ${lovePoints} 💖`; }
-  async function saveLove(){ if(!currentUser) return; await db.collection("users").doc(currentUser.uid).set({ love: lovePoints, displayName:currentUser.displayName||currentUser.email },{ merge:true }); }
-  function debounceSaveLove(){ if(window._loveSaveTimeout) clearTimeout(window._loveSaveTimeout); window._loveSaveTimeout=setTimeout(saveLove,700); }
+  // Countdown
+  const targetDate=new Date("2025-11-20T18:00:00"); 
+  const countdownEl=document.getElementById("countdown");
+  function updateCountdown(){ 
+    const now=new Date(); 
+    const diff=targetDate-now; 
+    if(diff<=0){ countdownEl.textContent="Endlich sehi 💕"; return;} 
+    const days=Math.floor(diff/(1000*60*60*24)); 
+    const hours=Math.floor((diff/(1000*60*60))%24); 
+    const mins=Math.floor((diff/(1000*60))%60); 
+    countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min`; 
+  }
+  setInterval(updateCountdown,1000); updateCountdown();
 
   // Auth
   function renderAuthControls(user){
     authControls.innerHTML="";
     if(user){
       const div=document.createElement("div"); div.style.display="flex"; div.style.flexDirection="column"; div.style.gap="6px";
-      if(!user.displayName){
-        const input=document.createElement("input"); input.placeholder="Wähle deinen Usernamen"; div.appendChild(input);
-        const btn=document.createElement("button"); btn.textContent="Speichern"; btn.addEventListener("click",()=>{
-          const name=input.value.trim(); if(!name) return alert("Bitte Namen eingeben");
-          user.updateProfile({ displayName:name }).then(()=>{ alert("Username gespeichert!"); renderAuthControls(user); });
-        }); div.appendChild(btn);
-      }
-      const who=document.createElement("div"); who.textContent=`Angemeldet: ${user.displayName||user.email}`; who.style.fontSize=".95rem";
+      const who=document.createElement("div"); who.textContent=`Angemeldet: ${user.email}`; who.style.fontSize=".95rem";
       const outBtn=document.createElement("button"); outBtn.textContent="Abmelden"; outBtn.addEventListener("click",()=>auth.signOut());
-      div.appendChild(who); div.appendChild(outBtn); authControls.appendChild(div);
-    } else {
+      div.appendChild(who); div.appendChild(outBtn);
+      authControls.appendChild(div);
+
+      // Check username
+      db.collection("users").doc(user.uid).get().then(doc=>{
+        if(doc.exists && doc.data().username) username=doc.data().username;
+        else{
+          username=prompt("Bitte wähle einen Usernamen:") || "User";
+          db.collection("users").doc(user.uid).set({username}, {merge:true});
+        }
+      });
+    }else{
       const form=document.createElement("div"); form.style.display="flex"; form.style.flexDirection="column"; form.style.gap="6px";
       const email=document.createElement("input"); email.type="email"; email.placeholder="E-Mail";
       const pass=document.createElement("input"); pass.type="password"; pass.placeholder="Passwort";
-      const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort"); return;} auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+      const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{
+        const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;}
+        auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message));
+      });
       const signUpBtn=document.createElement("button"); signUpBtn.textContent="Neu registrieren"; signUpBtn.style.background="#ffd4e3"; signUpBtn.style.color="#8a2b54";
-      signUpBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort"); return;} auth.createUserWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+      signUpBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.createUserWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
       form.appendChild(email); form.appendChild(pass); form.appendChild(signInBtn); form.appendChild(signUpBtn); authControls.appendChild(form);
     }
   }
@@ -202,90 +245,111 @@
     currentUser=user;
     renderAuthControls(user);
     if(user){
-      try{
-        const doc=await db.collection("users").doc(user.uid).get();
-        lovePoints=(doc.exists && doc.data().love)?doc.data().love:0;
-      }catch(e){ console.error(e); lovePoints=0; }
-      setLoveDisplay();
-      saveLove();
-      loadNotes();
-      startLiveLeaderboard();
-    } else {
-      lovePoints=0;
-      setLoveDisplay();
-      leaderboardList.innerHTML="<li>Bitte anmelden 💕</li>";
-      notesArea.value="";
-      purchaseLog.innerHTML="";
+      // Load love points
+      const doc = await db.collection("users").doc(user.uid).get();
+      lovePoints = (doc.exists && doc.data().love)?doc.data().love:0;
+      loveCounterEl.textContent = `Liebe: ${lovePoints} 💖`;
+
+      // Load notes
+      const notesDoc = await db.collection("notes").doc(user.uid).get();
+      notesArea.value = (notesDoc.exists && notesDoc.data().text)?notesDoc.data().text:"";
+
+      updateLeaderboard();
+      updatePurchases();
     }
   });
 
   // Notes
-  function loadNotes(){ if(!currentUser) return;
-    db.collection("notes").doc(currentUser.uid).get().then(doc=>{ notesArea.value=(doc.exists && doc.data().text)?doc.data().text:""; }).catch(console.error);
-  }
-  notesArea.addEventListener("input",()=>{ if(!currentUser) return; if(notesSaveTimer) clearTimeout(notesSaveTimer); notesSaveTimer=setTimeout(()=>{ db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}).catch(console.error); },700); });
+  openNotesBtn.addEventListener("click", ()=>{ notesPanel.style.display="flex"; });
+  closeNotesBtn.addEventListener("click", ()=>{ notesPanel.style.display="none"; });
+  notesArea.addEventListener("input", ()=>{
+    if(!currentUser) return;
+    if(window._notesSaveTimeout) clearTimeout(window._notesSaveTimeout);
+    window._notesSaveTimeout = setTimeout(()=>{
+      db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}).catch(console.error);
+    },700);
+  });
 
-  closeNotesBtn.addEventListener("click",()=>{ notesPanel.style.display="none"; });
-  menuButton.addEventListener("click",()=> menuPanel.classList.toggle("open"));
-
-  // Heart rain
-  function createHeart(){ const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px"; const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; document.body.appendChild(heart);
-    heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints+=1; setLoveDisplay(); debounceSaveLove(); heart.remove(); } else alert("Bitte anmelden"); });
+  // Hearts
+  function createHeartOnce(){
+    const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
+    const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; heart.style.cursor="pointer"; document.body.appendChild(heart);
+    heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints+=1; loveCounterEl.textContent=`Liebe: ${lovePoints} 💖`; db.collection("users").doc(currentUser.uid).set({love:lovePoints},{merge:true}); heart.remove(); } else alert("Bitte zuerst anmelden."); });
     const endY=window.innerHeight+100; const duration=Math.random()*3500+3000; let start=null;
-    function animate(ts){ if(!start) start=ts; const progress=(ts-start)/duration; const y=Math.min(progress*endY,endY); heart.style.transform=`translateY(${y}px) rotate(${progress*360}deg)`; heart.style.opacity=`${1-progress}`; if(progress<1) requestAnimationFrame(animate); else heart.remove();}
+    function animate(ts){ if(!start) start=ts; const t=ts-start; const pct=t/duration; heart.style.top=(pct*endY-40)+"px"; heart.style.opacity=1-pct; if(pct<1) requestAnimationFrame(animate); else heart.remove(); }
     requestAnimationFrame(animate);
   }
-  setInterval(createHeart,900);
+  heartIntervalId=setInterval(createHeartOnce, 800);
 
-  // Yes/No button
-  function moveNo(){ const wrap=document.querySelector(".yesno-wrap"); const pad=8; const btnW=noBtn.offsetWidth||100; const btnH=noBtn.offsetHeight||40; const maxX=wrap.clientWidth-btnW-pad; const maxY=wrap.clientHeight-btnH-pad; const randX=Math.floor(Math.random()*maxX); const randY=Math.floor(Math.random()*maxY); noBtn.style.left=randX+"px"; noBtn.style.top=randY+"px"; }
-  noBtn.addEventListener("mouseenter", moveNo);
-  noBtn.addEventListener("touchstart", moveNo);
-  noBtn.addEventListener("click", e=>e.preventDefault());
-  window.addEventListener("load", moveNo);
-  yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast nicht auf Nein gedrückt!"));
-
-  // Reasons
-  const reasons=["Du bist die erste Person, die ich immer bei mir will.","Du bist das erste, an das ich morgens denke.","Du hast so lange auf mich gewartet <3.","Du bist so süß und lieb.","Du machst mich einfach glücklich.","Du bist der Grund, warum ich lächle.","Ich liebe deine Art zu lachen.","Ich freue mich jedes Mal, dich zu sehen.","Du bist wunderschön.","Ich bin so stolz, dass du meins bist.","Deine Augen sind so wunderschön","Ich liebe dich, weil du mich verstehst.","Ich liebe dein Lächeln.","Du akzeptierst mich"];
-  showReasonBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
-
-  // Countdown
-  const targetDate=new Date("2025-11-20T18:00:00"); const countdownEl=document.getElementById("countdown");
-  function updateCountdown(){ const now=new Date(); const diff=targetDate-now; if(diff<=0){ countdownEl.textContent="Endlich sehi 💕"; return;} const days=Math.floor(diff/(1000*60*60*24)); const hours=Math.floor((diff/(1000*60*60))%24); const mins=Math.floor((diff/(1000*60))%60); countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min`; }
-  setInterval(updateCountdown,1000); updateCountdown();
-
-  // Gallery
-  function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
-  changeImageBtn.addEventListener("click", setRandomImage);
-  setRandomImage();
-  randomImage.addEventListener("error", ()=>{ randomImage.src=images[0]; });
-
-  // Pill
-  function updatePill(){ const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0); if(now>pillTime) pillTime.setDate(pillTime.getDate()+1); const diff=pillTime-now; const hours=Math.floor(diff/3600000); const mins=Math.floor((diff/60000)%60); const lastTaken=localStorage.getItem("pillTakenDate"); const today=new Date().toDateString();
-    if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`; } else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; } else{ pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`; } }
-  setInterval(updatePill,30000); updatePill();
-  pillTakenBtn.addEventListener("click",()=>{ localStorage.setItem("pillTakenDate", new Date().toDateString()); updatePill(); });
+  // Yes/No
+  yesBtn.addEventListener("click", ()=>alert("Ich liebe dich auch! 💕"));
+  noBtn.addEventListener("mouseenter", ()=>{ const x=Math.random()*(window.innerWidth-90); const y=Math.random()*(window.innerHeight-50); noBtn.style.left=x+"px"; noBtn.style.top=y+"px"; });
 
   // Love shop
-  function buyItem(cost,name){ if(!currentUser){ alert("Bitte anmelden"); return;} if(lovePoints>=cost){ lovePoints-=cost; setLoveDisplay(); debounceSaveLove(); 
-    const purchaseRef=db.collection("purchases").doc(); purchaseRef.set({item:name,user:currentUser.displayName||currentUser.email,timestamp:new Date()});
-  } else alert("Nicht genug Liebe 💖"); }
-
-  loveShopBtn.addEventListener("click",()=>{
-    const box=document.createElement("div"); box.style.position="fixed"; box.style.left="50%"; box.style.top="50%"; box.style.transform="translate(-50%,-50%)"; box.style.zIndex=13000;
-    box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6"; box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
-    box.innerHTML=`<button id="b1">Kiss - 50 💖</button><button id="b2">Filmeabend - 100 💖</button><button id="b3">Kino Date - 500 💖</button>`;
-    document.body.appendChild(box);
-    box.addEventListener("click",(e)=>{ if(e.target.id==="b1"){ buyItem(50,"Kiss"); box.remove(); } if(e.target.id==="b2"){ buyItem(100,"Filmeabend"); box.remove(); } if(e.target.id==="b3"){ buyItem(500,"Kino Date"); box.remove(); } });
-    setTimeout(()=>{ window.addEventListener("click",function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
+  const shopItems=[
+    {name:"Kiss",price:50},
+    {name:"Filmeabend",price:100},
+    {name:"Kino Date",price:500}
+  ];
+  loveShopBtn.addEventListener("click", async ()=>{
+    if(!currentUser){alert("Bitte anmelden."); return;}
+    let choice=prompt(`Love Shop 💕\n1. Kiss 50\n2. Filmeabend 100\n3. Kino Date 500\nGib Zahl ein:`); 
+    if(!choice) return;
+    let idx=parseInt(choice)-1;
+    if(idx<0 || idx>=shopItems.length){alert("Ungültig"); return;}
+    const item=shopItems[idx];
+    if(lovePoints<item.price){alert("Nicht genug Liebe 💖"); return;}
+    lovePoints-=item.price;
+    loveCounterEl.textContent=`Liebe: ${lovePoints} 💖`;
+    await db.collection("users").doc(currentUser.uid).set({love:lovePoints},{merge:true});
+    await db.collection("purchases").add({uid:currentUser.uid,username:username||"User",item:item.name,timestamp:firebase.firestore.FieldValue.serverTimestamp()});
+    updatePurchases();
+    alert(`Du hast ${item.name} gekauft! 💕`);
+    updateLeaderboard();
   });
 
   // Leaderboard live
-  function startLiveLeaderboard(){ db.collection("users").orderBy("love","desc").onSnapshot(snapshot=>{
-    leaderboardList.innerHTML=""; snapshot.forEach(doc=>{ const data=doc.data(); const name=data.displayName||doc.id.slice(0,6); leaderboardList.innerHTML+=`<li>${name}: ${data.love||0} 💖</li>`; });
-    // Purchases
-    db.collection("purchases").orderBy("timestamp","desc").limit(10).get().then(pDoc=>{ purchaseLog.innerHTML=""; pDoc.forEach(p=>{ const d=p.data(); purchaseLog.innerHTML+=`${d.user} kaufte ${d.item}<br>`; }); });
-  }); }
+  async function updateLeaderboard(){
+    const snap = await db.collection("users").orderBy("love","desc").limit(10).get();
+    leaderboardList.innerHTML="";
+    snap.forEach(doc=>{
+      const data=doc.data();
+      const li=document.createElement("li");
+      li.textContent=`${data.username||"User"}: ${data.love||0}`;
+      leaderboardList.appendChild(li);
+    });
+  }
+  setInterval(updateLeaderboard,2000);
+
+  // Purchases table
+  async function updatePurchases(){
+    const snap = await db.collection("purchases").orderBy("timestamp","desc").limit(10).get();
+    purchasesList.innerHTML="";
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const li=document.createElement("li");
+      li.textContent=`${d.username||"User"} → ${d.item}`;
+      purchasesList.appendChild(li);
+    });
+  }
+
+  // Floating menu toggle
+  menuButton.addEventListener("click", ()=>{ menuPanel.classList.toggle("open"); });
+
+  // Pill reminder
+  let pillEnd = new Date();
+  pillEnd.setMinutes(pillEnd.getMinutes()+60);
+  function updatePillCountdown(){
+    const now=new Date(); const diff=pillEnd-now;
+    if(diff<=0){ pillCountdown.textContent="💊 Zeit zum Nehmen!"; return;}
+    const mins=Math.floor(diff/60000); const secs=Math.floor((diff/1000)%60);
+    pillCountdown.textContent=`Noch ${mins} Min ${secs} Sek`;
+  }
+  setInterval(updatePillCountdown,1000);
+  pillTakenBtn.addEventListener("click", ()=>{
+    pillEnd = new Date(); pillEnd.setMinutes(pillEnd.getMinutes()+60);
+    alert("Gut gemacht! 😇");
+  });
 
   </script>
 </body>
