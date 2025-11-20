@@ -228,7 +228,7 @@
     const box=document.createElement("div"); box.style.position="fixed"; box.style.left="50%"; box.style.top="50%"; box.style.transform="translate(-50%,-50%)";
     box.style.zIndex=13000; box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6";
     box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
-    box.innerHTML=`<button id="b1">Mini Date - 10 💖</button><button id="b2">Ice Cream Date - 25 💖</button><button id="b3">Movie Date - 50 💖</button>`;
+    box.innerHTML=`<button id="b1">Kiss - 25 💖</button><button id="b2">Filmeabend - 100 💖</button><button id="b3">Kino Date - 500 💖</button>`;
     document.body.appendChild(box);
     box.addEventListener("click", (e)=>{ if(e.target.id==="b1"){ buyItem(10,"Mini Date"); box.remove(); } if(e.target.id==="b2"){ buyItem(25,"Ice Cream Date"); box.remove(); } if(e.target.id==="b3"){ buyItem(50,"Movie Date"); box.remove(); } });
     setTimeout(()=>{ window.addEventListener("click", function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
@@ -258,7 +258,8 @@
     "Ich bin so stolz, dass du meins bist.",
     "Deine Augen sind so wunderschön",
     "Ich liebe dich, weil du mich verstehst.",
-    "Ich liebe dein Lächeln."
+    "Ich liebe dein Lächeln.",
+    "Du akzeptierst mich",
   ];
   document.getElementById("showReasonBtn").addEventListener("click",()=>{ document.getElementById("letterText").textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
 
@@ -280,7 +281,7 @@
     "https://i.imgur.com/m05eQGf.jpeg",
     "https://i.imgur.com/rp80WsN.jpeg",
     "https://i.imgur.com/BIxd6ix.jpeg",
-    "https://i.imgur.com/TnM1Fnv.jpg"
+  
   ];
   function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
   changeImageBtn.addEventListener("click", setRandomImage);
@@ -292,3 +293,4 @@
   </script>
 </body>
 </html>
+
