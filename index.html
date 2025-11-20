@@ -11,6 +11,7 @@
     --bg1:#ffe6f0;
     --card:#fff0f6;
     --accent:#d63384;
+    --green:#28a745;
   }
   *{box-sizing:border-box}
   body{
@@ -48,25 +49,16 @@
   .yesno-wrap{position:relative; min-height:100px}
   #yesBtn{z-index:2}
   #noBtn{position:absolute;z-index:3;cursor:default;}
-  /* Leaderboard oben rechts */
-  #liveLeaderboard{
-    position: fixed;
-    top: 18px;
-    right: 18px;
-    width: 180px;
-    background: var(--card);
-    border: 2px solid #ffb6c1;
-    border-radius: 14px;
-    padding: 8px;
-    z-index: 15000;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  }
+  #reasonsBtn{display:block;margin:10px auto;} /* Button mittig */
+  #leaderboard{position:fixed;top:18px;right:18px;background:var(--card);border:2px solid #ffb6c1;padding:8px 12px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:12001;}
+  #purchaseLog{position:fixed;top:100px;right:18px;background:var(--card);border:2px solid #ffb6c1;padding:8px 12px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:300px;overflow-y:auto;z-index:12002;}
   @media (max-width:600px){
     .gallery img{width:88vw}
     #menuPanel{right:6%;width:88%}
     #menuButton{right:6%}
     #notesPanel{left:4%;right:4%;height:220px}
-    #liveLeaderboard{width:150px;top:12px;right:12px}
+    #leaderboard{top:80px;right:6%;}
+    #purchaseLog{top:150px;right:6%;}
   }
 </style>
 </head>
@@ -79,8 +71,8 @@
     <div class="card letter">
       <h2>💌 13 (or more) reasons why</h2>
       <p id="letterText">Ein Bruchteil der Gründe wieso ich dich liebe.</p>
-      <div style="margin-top:10px;text-align:center">
-        <button id="showReasonBtn">Zeig mir einen Grund 💕</button>
+      <div style="margin-top:10px">
+        <button id="reasonsBtn">Zeig mir einen Grund 💕</button>
       </div>
     </div>
 
@@ -111,12 +103,6 @@
     <footer style="margin:18px 0;text-align:center;color:#888">Mit Liebe gemacht von justini bananini 💕</footer>
   </div>
 
-  <!-- Live Leaderboard oben rechts -->
-  <div id="liveLeaderboard">
-    <h4 style="margin:6px 0;text-align:center;font-size:1rem">Leaderboard 💖</h4>
-    <ol id="leaderboardList" style="padding-left:16px;margin:0 0 0 0"></ol>
-  </div>
-
   <!-- Floating menu button + panel -->
   <button id="menuButton">💖</button>
   <div id="menuPanel" aria-hidden="true">
@@ -125,15 +111,29 @@
       <div id="pillCountdown" style="font-size:.95rem;color:#ff5c8d;margin-top:6px"></div>
       <div style="margin-top:8px"><button id="pillTakenBtn">Hab genommi 😇</button></div>
     </div>
+    <div id="loveCounter" class="small">Liebe: 0 💖</div>
     <div id="authControls" style="margin-top:8px"></div>
     <button id="loveShopBtn" class="small">Love Shop 💕</button>
-    <div id="notesPanel" aria-hidden="true">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px">
-        <h3 style="margin:0">Paladins Ideen 💡</h3>
-        <button id="closeNotesBtn" style="background:#ffb6c1;color:#fff;padding:6px 10px;border-radius:10px">Schließen</button>
-      </div>
-      <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..." aria-label="Notizen"></textarea>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="leaderboard">
+    <h4 style="margin:0 0 6px 0;font-size:1rem;text-align:left;">Leaderboard 💖</h4>
+    <ol id="leaderboardList" style="padding-left:16px;margin:0 0 8px 0;"></ol>
+    <input type="text" id="usernameInput" placeholder="Username setzen" style="width:100%;margin-top:6px;padding:4px;border-radius:6px;border:1px solid #ffdfe8;">
+    <button id="setUsernameBtn" style="width:100%;margin-top:4px;">Speichern</button>
+  </div>
+
+  <!-- Purchase log -->
+  <div id="purchaseLog"><h4>Käufe 💕</h4><ul id="purchaseList" style="padding-left:16px;margin:0;"></ul></div>
+
+  <!-- Notes panel -->
+  <div id="notesPanel" aria-hidden="true">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px">
+      <h3 style="margin:0">Paladins Ideen 💡</h3>
+      <button id="closeNotesBtn" style="background:#ffb6c1;color:#fff;padding:6px 10px;border-radius:10px">Schließen</button>
     </div>
+    <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..." aria-label="Notizen"></textarea>
   </div>
 
   <!-- Firebase -->
@@ -158,39 +158,137 @@
   const menuButton = document.getElementById("menuButton");
   const menuPanel = document.getElementById("menuPanel");
   const notesPanel = document.getElementById("notesPanel");
-  const openNotesBtn = document.getElementById("openNotesBtn");
   const closeNotesBtn = document.getElementById("closeNotesBtn");
   const notesArea = document.getElementById("notesArea");
-  const loveShopBtn = document.getElementById("loveShopBtn");
+  const loveCounterEl = document.getElementById("loveCounter");
   const leaderboardList = document.getElementById("leaderboardList");
+  const usernameInput = document.getElementById("usernameInput");
+  const setUsernameBtn = document.getElementById("setUsernameBtn");
+  const loveShopBtn = document.getElementById("loveShopBtn");
+  const purchaseList = document.getElementById("purchaseList");
+  const reasonsBtn = document.getElementById("reasonsBtn");
+  const letterText = document.getElementById("letterText");
   const randomImage = document.getElementById("randomImage");
   const changeImageBtn = document.getElementById("changeImageBtn");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
-  const showReasonBtn = document.getElementById("showReasonBtn");
-  const letterText = document.getElementById("letterText");
+  const countdownEl = document.getElementById("countdown");
+  const pillTitle = document.getElementById("pillTitle");
+  const pillCountdown = document.getElementById("pillCountdown");
+  const pillTakenBtn = document.getElementById("pillTakenBtn");
+  const authControls = document.getElementById("authControls");
 
   let currentUser = null;
   let lovePoints = 0;
   let heartIntervalId = null;
   let leaderboardUnsub = null;
   let notesSaveTimer = null;
-  let username = "";
 
-  function setLoveDisplay(){ /* noch zu implementieren, bei Bedarf */ }
+  function setLoveDisplay(){ loveCounterEl.textContent = `Liebe: ${lovePoints} 💖`; }
+  async function saveLoveToFirestore(){ if(!currentUser) return; await db.collection("users").doc(currentUser.uid).set({ love: lovePoints }, { merge: true }); }
+  function debounceSaveLove(){ if(window._loveSaveTimeout) clearTimeout(window._loveSaveTimeout); window._loveSaveTimeout = setTimeout(saveLoveToFirestore, 700); }
 
+  // Auth
+  function renderAuthControls(user){
+    authControls.innerHTML = "";
+    if(user){
+      const div=document.createElement("div"); div.style.display="flex"; div.style.flexDirection="column"; div.style.gap="6px";
+      const who=document.createElement("div"); who.textContent=`Angemeldet: ${user.email}`; who.style.fontSize=".95rem";
+      const outBtn=document.createElement("button"); outBtn.textContent="Abmelden"; outBtn.addEventListener("click",()=>auth.signOut());
+      div.appendChild(who); div.appendChild(outBtn); authControls.appendChild(div);
+    }else{
+      const form=document.createElement("div"); form.style.display="flex"; form.style.flexDirection="column"; form.style.gap="6px";
+      const email=document.createElement("input"); email.type="email"; email.placeholder="E-Mail";
+      const pass=document.createElement("input"); pass.type="password"; pass.placeholder="Passwort";
+      const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+      const signUpBtn=document.createElement("button"); signUpBtn.textContent="Neu registrieren"; signUpBtn.style.background="#ffd4e3"; signUpBtn.style.color="#8a2b54";
+      signUpBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.createUserWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+      form.appendChild(email); form.appendChild(pass); form.appendChild(signInBtn); form.appendChild(signUpBtn); authControls.appendChild(form);
+    }
+  }
+
+  auth.onAuthStateChanged(async user=>{
+    currentUser=user;
+    renderAuthControls(user);
+    if(user){
+      try{ const doc=await db.collection("users").doc(user.uid).get(); lovePoints=(doc.exists && doc.data().love)?doc.data().love:0; }catch(e){console.error(e); lovePoints=0;}
+      setLoveDisplay(); saveLoveToFirestore();
+      if(leaderboardUnsub) leaderboardUnsub(); leaderboardUnsub = updateLeaderboardRealtime();
+      try{ const notesDoc=await db.collection("notes").doc(user.uid).get(); notesArea.value=(notesDoc.exists && notesDoc.data().text)?notesDoc.data().text:"";}catch(e){console.error(e);}
+      try{ const unameDoc=await db.collection("users").doc(user.uid).get(); usernameInput.value=(unameDoc.exists && unameDoc.data().username)?unameDoc.data().username:""; }catch(e){console.error(e);}
+    } else { lovePoints=0; setLoveDisplay(); if(leaderboardUnsub){leaderboardUnsub(); leaderboardUnsub=null;} leaderboardList.innerHTML="<li>Bitte anmelden 💕</li>"; notesArea.value=""; usernameInput.value="";}
+  });
+
+  // Hearts
   function createHeartOnce(){
-    const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; 
-    const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
-    const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; heart.style.cursor="pointer"; 
-    document.body.appendChild(heart);
-    heart.addEventListener("click", e=>{ e.stopPropagation(); lovePoints+=1; heart.remove(); });
+    const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
+    const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; heart.style.cursor="pointer"; document.body.appendChild(heart);
+    heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints+=1; setLoveDisplay(); debounceSaveLove(); heart.remove(); } else alert("Bitte zuerst anmelden, damit Punkte gespeichert werden."); });
     const endY=window.innerHeight+100; const duration=Math.random()*3500+3000; let start=null;
     function animate(ts){ if(!start) start=ts; const progress=(ts-start)/duration; const y=Math.min(progress*endY,endY); heart.style.transform=`translateY(${y}px) rotate(${progress*360}deg)`; heart.style.opacity=`${1-progress}`; if(progress<1) requestAnimationFrame(animate); else heart.remove();}
     requestAnimationFrame(animate);
   }
   function startHeartRain(){ if(heartIntervalId) return; createHeartOnce(); heartIntervalId=setInterval(createHeartOnce,900);}
   window.addEventListener("load",()=>startHeartRain());
+
+  // Leaderboard
+  function updateLeaderboardRealtime(){
+    try{return db.collection("users").where("love",">=",0).orderBy("love","desc").limit(5).onSnapshot(snapshot=>{
+      leaderboardList.innerHTML="";
+      snapshot.forEach(doc=>{
+        const data=doc.data();
+        const name=doc.id=== (currentUser && currentUser.uid)?"Du":(data.username||doc.id.slice(0,6));
+        const li=document.createElement("li");
+        li.textContent=`${name}: ${data.love||0} 💖`;
+        leaderboardList.appendChild(li);
+      });
+      if(leaderboardList.children.length===0) leaderboardList.innerHTML="<li>noch keiner</li>";
+    });}catch(e){console.error(e); leaderboardList.innerHTML="<li>Fehler</li>";}
+  }
+
+  setUsernameBtn.addEventListener("click", async ()=>{
+    if(!currentUser) return alert("Bitte anmelden");
+    const uname=usernameInput.value.trim(); if(!uname) return alert("Bitte gib einen Namen ein");
+    await db.collection("users").doc(currentUser.uid).set({username:uname},{merge:true});
+    alert("Username gesetzt 💖");
+  });
+
+  // Notes
+  notesArea.addEventListener("input",()=>{ if(!currentUser) return; if(notesSaveTimer) clearTimeout(notesSaveTimer); notesSaveTimer=setTimeout(()=>{ db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}).catch(console.error); },700); });
+
+  // Love Shop
+  const shopItems=[
+    {id:"kiss",name:"Kiss",cost:50},
+    {id:"filmeabend",name:"Filmeabend",cost:100},
+    {id:"kino",name:"Kino Date",cost:500},
+  ];
+  function buyItem(item){
+    if(!currentUser){alert("Bitte anmelden, um etwas zu kaufen."); return;}
+    if(lovePoints>=item.cost){
+      lovePoints-=item.cost;
+      setLoveDisplay();
+      debounceSaveLove();
+      const li=document.createElement("li");
+      li.textContent=`${item.name} von ${usernameInput.value || "Anonym"} gekauft 💖`;
+      li.addEventListener("click",()=>li.remove());
+      purchaseList.prepend(li);
+      alert(`Du hast ${item.name} gekauft 💕`);
+    } else alert("Nicht genug Liebe 💖");
+  }
+  loveShopBtn.addEventListener("click",()=>{
+    const box=document.createElement("div");
+    box.style.position="fixed"; box.style.left="50%"; box.style.top="50%"; box.style.transform="translate(-50%,-50%)";
+    box.style.zIndex=13000; box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6";
+    box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
+    shopItems.forEach(it=>{
+      const b=document.createElement("button");
+      b.textContent=`${it.name} - ${it.cost} 💖`;
+      b.addEventListener("click",()=>{ buyItem(it); box.remove(); });
+      box.appendChild(b);
+    });
+    document.body.appendChild(box);
+    setTimeout(()=>{ window.addEventListener("click", function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
+  });
 
   // Reasons
   const reasons=[
@@ -209,10 +307,10 @@
     "Ich liebe dein Lächeln.",
     "Du akzeptierst mich",
   ];
-  showReasonBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
+  reasonsBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
 
   // Countdown
-  const targetDate=new Date("2025-11-20T18:00:00"); const countdownEl=document.getElementById("countdown");
+  const targetDate=new Date("2025-11-20T18:00:00");
   function updateCountdown(){ const now=new Date(); const diff=targetDate-now; if(diff<=0){ countdownEl.textContent="Endlich sehi 💕"; return;} const days=Math.floor(diff/(1000*60*60*24)); const hours=Math.floor((diff/(1000*60*60))%24); const mins=Math.floor((diff/(1000*60))%60); countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min`; }
   setInterval(updateCountdown,1000); updateCountdown();
 
@@ -238,6 +336,14 @@
   // Menu panels
   menuButton.addEventListener("click",()=> menuPanel.classList.toggle("open"));
   closeNotesBtn.addEventListener("click",()=>{ notesPanel.style.display="none"; });
+
+  // Pill
+  function updatePillCountdown(){ const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0); if(now>pillTime) pillTime.setDate(pillTime.getDate()+1); const diff=pillTime-now; const hours=Math.floor(diff/3600000); const mins=Math.floor((diff/60000)%60); const lastTaken=localStorage.getItem("pillTakenDate"); const today=new Date().toDateString(); if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`; } else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; } else{ pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`; } }
+  setInterval(updatePillCountdown,30000); updatePillCountdown();
+  pillTakenBtn.addEventListener("click",()=>{ localStorage.setItem("pillTakenDate", new Date().toDateString()); updatePillCountdown(); });
+
+  window.addEventListener("beforeunload", ()=>{ if(currentUser) saveLoveToFirestore(); });
+  renderAuthControls(null);
   </script>
 </body>
 </html>
