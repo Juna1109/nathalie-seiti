@@ -5,57 +5,56 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Für dich ❤️</title>
 <style>
-:root{
-  --pink:#ff6b9b;
-  --pink-2:#ff85ad;
-  --bg1:#ffe6f0;
-  --card:#fff0f6;
-  --accent:#d63384;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:"Poppins",system-ui,Arial,sans-serif;
-  background:linear-gradient(135deg,var(--bg1),#fff);
-  color:var(--accent);
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,p{text-align:center;margin:0 0 .6rem}
-button{background:var(--pink);border:none;color:#fff;padding:.6rem 1rem;border-radius:24px;cursor:pointer;transition:all .18s}
-button:hover{transform:scale(1.03);background:var(--pink-2)}
-.center{max-width:980px;margin:18px auto;padding:0 16px}
-.card{background:var(--card);border:2px solid #ffb6c1;border-radius:14px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,0.06);margin:12px auto}
-.gallery{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:12px 0}
-.gallery img{width:320px;max-width:90vw;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);transition:transform .2s}
-.gallery img:hover{transform:scale(1.02)}
-#menuButton{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--pink-2);box-shadow:0 8px 24px rgba(0,0,0,0.18);color:#fff;cursor:pointer;z-index:12000}
-#menuPanel{position:fixed;right:18px;bottom:90px;width:270px;border-radius:14px;padding:12px;display:none;background:var(--card);z-index:12000;border:2px solid #ffb6c1;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-#menuPanel.open{display:flex;flex-direction:column;gap:8px}
-#menuPanel .small{font-size:.95rem;padding:.6rem;border-radius:10px;background:#fff;border:1px solid #ffdfe8;text-align:center}
-#notesPanel{position:fixed;left:5%;right:5%;bottom:22px;height:270px;background:var(--card);border-radius:14px;padding:10px;display:none;z-index:11999;box-shadow:0 8px 30px rgba(0,0,0,0.12);border:2px solid #ffb6c1}
-#notesPanel.open{display:flex;flex-direction:column}
-#notesPanel textarea{flex:1;border-radius:10px;border:1px solid #ffb6c1;padding:10px;font-family:inherit;resize:none}
-#authPanel input{padding:10px;border-radius:8px;border:1px solid #ffdfe8;font-size:1rem}
-.heart{position:fixed;z-index:11000;pointer-events:auto;user-select:none;will-change:transform,opacity}
-.yesno-wrap{position:relative; min-height:100px}
-#yesBtn{z-index:2}
-#noBtn{position:absolute;z-index:3;cursor:default;}
-#leaderboardContainer{position:fixed;top:18px;right:18px;width:180px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:12px;padding:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:13000}
-#purchaseHistoryContainer{position:fixed;top:220px;right:18px;width:220px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:12px;padding:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:13000;overflow-y:auto;max-height:300px}
-@media (max-width:600px){
-  .gallery img{width:88vw}
-  #menuPanel{right:6%;width:88%}
-  #menuButton{right:6%}
-  #notesPanel{left:4%;right:4%;height:220px}
-  #leaderboardContainer{right:6%}
-  #purchaseHistoryContainer{right:6%}
-}
+  :root{
+    --pink:#ff6b9b;
+    --pink-2:#ff85ad;
+    --bg1:#ffe6f0;
+    --card:#fff0f6;
+    --accent:#d63384;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Poppins",system-ui,Arial,sans-serif;
+    background:linear-gradient(135deg,var(--bg1),#fff);
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,p{text-align:center;margin:0 0 .6rem}
+  button{background:var(--pink);border:none;color:#fff;padding:.6rem 1rem;border-radius:24px;cursor:pointer;transition:all .18s}
+  button:hover{transform:scale(1.03);background:var(--pink-2)}
+  .center{max-width:980px;margin:18px auto;padding:0 16px}
+  .card{background:var(--card);border:2px solid #ffb6c1;border-radius:14px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,0.06);margin:12px auto}
+  .gallery{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:12px 0}
+  .gallery img{width:320px;max-width:90vw;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);transition:transform .2s}
+  .gallery img:hover{transform:scale(1.02)}
+  #menuButton{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--pink-2);box-shadow:0 8px 24px rgba(0,0,0,0.18);color:#fff;cursor:pointer;z-index:12000}
+  #menuPanel{position:fixed;right:18px;bottom:90px;width:270px;border-radius:14px;padding:12px;display:none;background:var(--card);z-index:12000;border:2px solid #ffb6c1;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
+  #menuPanel.open{display:flex;flex-direction:column;gap:8px}
+  #menuPanel .small{font-size:.95rem;padding:.6rem;border-radius:10px;background:#fff;border:1px solid #ffdfe8;text-align:center}
+  #notesPanel{position:fixed;left:5%;right:5%;bottom:22px;height:270px;background:var(--card);border-radius:14px;padding:10px;display:none;z-index:11999;box-shadow:0 8px 30px rgba(0,0,0,0.12);border:2px solid #ffb6c1}
+  #notesPanel.open{display:flex;flex-direction:column}
+  #notesPanel textarea{flex:1;border-radius:10px;border:1px solid #ffb6c1;padding:10px;font-family:inherit;resize:none}
+  #authPanel input{padding:10px;border-radius:8px;border:1px solid #ffdfe8;font-size:1rem}
+  .heart{position:fixed;z-index:11000;pointer-events:auto;user-select:none;will-change:transform,opacity}
+  .yesno-wrap{position:relative; min-height:100px;text-align:center}
+  #yesBtn{z-index:2;margin:0 auto;display:block}
+  #noBtn{position:absolute;z-index:3;cursor:default;}
+  #leaderboardContainer{position:fixed;top:18px;right:18px;width:180px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:12px;padding:8px;box-shadow:0 6px 20px rgba(0,0,0,0.1);z-index:12000}
+  #purchasesContainer{position:fixed;top:220px;right:18px;width:220px;background:#fff0f6;border:2px solid #ffb6c1;border-radius:12px;padding:8px;box-shadow:0 6px 20px rgba(0,0,0,0.1);z-index:12000}
+  @media (max-width:600px){
+    .gallery img{width:88vw}
+    #menuPanel{right:6%;width:88%}
+    #menuButton{right:6%}
+    #notesPanel{left:4%;right:4%;height:220px}
+    #leaderboardContainer,#purchasesContainer{right:4%;width:90%}
+  }
 </style>
 </head>
 <body>
 <div class="center">
   <h1>💖 Für dich bububär 💖</h1>
-  <p style="margin-bottom:6px">Diese Seite ist für dich gemacht, weil ich dich ganz doll liebi 💞</p>
+  <p style="text-align:center;margin-bottom:6px">Diese Seite ist für dich gemacht, weil ich dich ganz doll liebi 💞</p>
 
   <!-- Letter -->
   <div class="card letter">
@@ -102,10 +101,6 @@ button:hover{transform:scale(1.03);background:var(--pink-2)}
     <div style="margin-top:8px"><button id="pillTakenBtn">Hab genommi 😇</button></div>
   </div>
   <div id="loveCounter" class="small">Liebe: 0 💖</div>
-  <button id="loveShopBtn" class="small">💖 Love Shop 💕</button>
-  <div style="display:flex;gap:8px;margin-top:6px">
-    <button id="openNotesBtn" style="flex:1">📝 Notizen</button>
-  </div>
   <div id="authControls" style="margin-top:8px"></div>
 </div>
 
@@ -118,14 +113,16 @@ button:hover{transform:scale(1.03);background:var(--pink-2)}
   <textarea id="notesArea" placeholder="Schreib deine Ideen hier rein..." aria-label="Notizen"></textarea>
 </div>
 
-<!-- Leaderboard & Purchase History -->
+<!-- Leaderboard -->
 <div id="leaderboardContainer">
-  <h4 style="margin:6px 0;text-align:center">Leaderboard 💖</h4>
+  <h4 style="margin:6px 0;text-align:left;font-size:1rem">Leaderboard 💖</h4>
   <ol id="leaderboardList" style="padding-left:16px;margin:0 0 8px 0"></ol>
 </div>
-<div id="purchaseHistoryContainer">
-  <h4 style="margin:6px 0;text-align:center">Käufe 💕</h4>
-  <ul id="purchaseHistoryList" style="padding-left:16px;margin:0 0 8px 0"></ul>
+
+<!-- Purchases -->
+<div id="purchasesContainer">
+  <h4 style="margin:6px 0;text-align:left;font-size:1rem">Gekaufte Items 💕</h4>
+  <ul id="purchasesList" style="padding-left:16px;margin:0 0 8px 0"></ul>
 </div>
 
 <!-- Firebase -->
@@ -150,13 +147,11 @@ const db = firebase.firestore();
 const menuButton = document.getElementById("menuButton");
 const menuPanel = document.getElementById("menuPanel");
 const notesPanel = document.getElementById("notesPanel");
-const openNotesBtn = document.getElementById("openNotesBtn");
 const closeNotesBtn = document.getElementById("closeNotesBtn");
 const notesArea = document.getElementById("notesArea");
 const loveCounterEl = document.getElementById("loveCounter");
 const leaderboardList = document.getElementById("leaderboardList");
-const purchaseHistoryList = document.getElementById("purchaseHistoryList");
-const loveShopBtn = document.getElementById("loveShopBtn");
+const purchasesList = document.getElementById("purchasesList");
 const pillTitle = document.getElementById("pillTitle");
 const pillCountdown = document.getElementById("pillCountdown");
 const pillTakenBtn = document.getElementById("pillTakenBtn");
@@ -173,153 +168,162 @@ let lovePoints = 0;
 let heartIntervalId = null;
 let notesSaveTimer = null;
 
-// --- Utils ---
-function setLoveDisplay(){ loveCounterEl.textContent = `Liebe: ${lovePoints} 💖`; }
-async function saveLove(){ if(!currentUser) return; await db.collection("users").doc(currentUser.uid).set({ love: lovePoints, displayName: currentUser.displayName||currentUser.email }, { merge:true }); }
+// Images
+const images=[
+  "https://i.imgur.com/m05eQGf.jpeg",
+  "https://i.imgur.com/rp80WsN.jpeg",
+  "https://i.imgur.com/BIxd6ix.jpeg"
+];
+function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
+changeImageBtn.addEventListener("click", setRandomImage);
+setRandomImage();
+randomImage.addEventListener("error", ()=>{ randomImage.src=images[0]; });
 
-// --- Auth ---
-function renderAuthControls(user){
-  authControls.innerHTML="";
-  if(user){
-    const div=document.createElement("div"); div.style.display="flex"; div.style.flexDirection="column"; div.style.gap="6px";
-    const who=document.createElement("div"); who.textContent=`Angemeldet: ${user.displayName||user.email}`; who.style.fontSize=".95rem";
-    const outBtn=document.createElement("button"); outBtn.textContent="Abmelden"; outBtn.addEventListener("click",()=>auth.signOut());
-    div.appendChild(who); div.appendChild(outBtn); authControls.appendChild(div);
-  } else {
-    const form=document.createElement("div"); form.style.display="flex"; form.style.flexDirection="column"; form.style.gap="6px";
-    const email=document.createElement("input"); email.type="email"; email.placeholder="E-Mail";
-    const pass=document.createElement("input"); pass.type="password"; pass.placeholder="Passwort";
-    const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden";
-    signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben");return;} auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
-    const signUpBtn=document.createElement("button"); signUpBtn.textContent="Neu registrieren"; signUpBtn.style.background="#ffd4e3"; signUpBtn.style.color="#8a2b54";
-    signUpBtn.addEventListener("click",async ()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben");return;} const cred=await auth.createUserWithEmailAndPassword(e,p); const name=prompt("Wähle einen Anzeigenamen"); if(name) cred.user.updateProfile({displayName:name});});
-    form.appendChild(email); form.appendChild(pass); form.appendChild(signInBtn); form.appendChild(signUpBtn); authControls.appendChild(form);
-  }
-}
+// Reasons
+const reasons=[
+  "Du bist die erste Person, die ich immer bei mir will.",
+  "Du bist das erste, an das ich morgens denke.",
+  "Du hast so lange auf mich gewartet <3.",
+  "Du bist so süß und lieb.",
+  "Du machst mich einfach glücklich.",
+  "Du bist der Grund, warum ich lächle.",
+  "Ich liebe deine Art zu lachen.",
+  "Ich freue mich jedes Mal, dich zu sehen.",
+  "Du bist wunderschön.",
+  "Ich bin so stolz, dass du meins bist.",
+  "Deine Augen sind so wunderschön",
+  "Ich liebe dich, weil du mich verstehst.",
+  "Ich liebe dein Lächeln.",
+  "Du akzeptierst mich",
+];
+showReasonBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
 
-// --- Heart Rain ---
-function createHeart(){
-  const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖";
-  const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
+// Countdown
+const targetDate=new Date("2025-11-20T18:00:00"); const countdownEl=document.getElementById("countdown");
+function updateCountdown(){ const now=new Date(); const diff=targetDate-now; if(diff<=0){ countdownEl.textContent="Endlich sehi 💕"; return;} const days=Math.floor(diff/(1000*60*60*24)); const hours=Math.floor((diff/(1000*60*60))%24); const mins=Math.floor((diff/(1000*60))%60); countdownEl.textContent=`${days} Tage, ${hours} Std, ${mins} Min`; }
+setInterval(updateCountdown,1000); updateCountdown();
+
+// Hearts
+function createHeartOnce(){
+  const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
   const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; document.body.appendChild(heart);
-  heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints++; setLoveDisplay(); saveLove(); heart.remove(); } else alert("Bitte anmelden"); });
+  heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints+=1; setLoveDisplay(); saveLoveToFirestore(); heart.remove(); } else alert("Bitte anmelden, damit Punkte gespeichert werden."); });
   const endY=window.innerHeight+100; const duration=Math.random()*3500+3000; let start=null;
   function animate(ts){ if(!start) start=ts; const progress=(ts-start)/duration; const y=Math.min(progress*endY,endY); heart.style.transform=`translateY(${y}px) rotate(${progress*360}deg)`; heart.style.opacity=`${1-progress}`; if(progress<1) requestAnimationFrame(animate); else heart.remove();}
   requestAnimationFrame(animate);
 }
-function startHeartRain(){ if(heartIntervalId) return; createHeart(); heartIntervalId=setInterval(createHeart,900);}
+function startHeartRain(){ if(heartIntervalId) return; createHeartOnce(); heartIntervalId=setInterval(createHeartOnce,900);}
 window.addEventListener("load",()=>startHeartRain());
 
-// --- Leaderboard & Purchase History ---
-function setupLiveLeaderboard(){
-  db.collection("users").orderBy("love","desc").limit(5).onSnapshot(snapshot=>{
-    leaderboardList.innerHTML="";
-    snapshot.forEach(doc=>{ const data=doc.data(); const name=data.displayName||doc.id.slice(0,6); leaderboardList.innerHTML+=`<li>${name}: ${data.love||0} 💖</li>`; });
-  });
-}
-function setupLivePurchases(){
-  db.collection("purchases").orderBy("timestamp","desc").limit(10).onSnapshot(snapshot=>{
-    purchaseHistoryList.innerHTML="";
-    snapshot.forEach(doc=>{ const data=doc.data(); purchaseHistoryList.innerHTML+=`<li>${data.name}: ${data.item} x${data.count}</li>`; });
-  });
-}
+function setLoveDisplay(){ loveCounterEl.textContent = `Liebe: ${lovePoints} 💖`; }
+async function saveLoveToFirestore(){ if(!currentUser) return; await db.collection("users").doc(currentUser.uid).set({ love: lovePoints, displayName:currentUser.displayName||currentUser.email }, { merge: true }); }
 
-// --- Love Shop ---
-function buyItem(item,cost){
-  if(!currentUser){ alert("Bitte anmelden"); return; }
-  if(lovePoints>=cost){
-    lovePoints-=cost; setLoveDisplay(); saveLove();
-    const purchaseRef=db.collection("purchases").doc();
-    purchaseRef.set({ name:currentUser.displayName||currentUser.email, item:item, count:1, timestamp:firebase.firestore.FieldValue.serverTimestamp() });
-    alert(`Du hast ${item} gekauft 💕`);
-  } else alert("Nicht genug Liebe 💖");
-}
-loveShopBtn.addEventListener("click",()=>{
-  const box=document.createElement("div");
-  box.style.position="fixed"; box.style.left="50%"; box.style.top="50%";
-  box.style.transform="translate(-50%,-50%)";
-  box.style.zIndex=14000; box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6"; box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
-  box.innerHTML=`<h3 style="text-align:center;margin:0">💖 Love Shop 💕</h3>
-                  <button id="b1">Kiss - 50 💖</button>
-                  <button id="b2">Filmeabend - 100 💖</button>
-                  <button id="b3">Kino Date - 500 💖</button>`;
-  document.body.appendChild(box);
-  box.addEventListener("click",(e)=>{
-    if(e.target.id==="b1"){ buyItem("Kiss",50); box.remove(); }
-    if(e.target.id==="b2"){ buyItem("Filmeabend",100); box.remove(); }
-    if(e.target.id==="b3"){ buyItem("Kino Date",500); box.remove(); }
-  });
-  setTimeout(()=>{ window.addEventListener("click",function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
-});
-
-// --- Pill Reminder ---
-function updatePillCountdown(){ 
-  const now=new Date(); 
-  const pillTime=new Date(); pillTime.setHours(20,0,0,0); 
-  if(now>pillTime) pillTime.setDate(pillTime.getDate()+1); 
-  const diff=pillTime-now; 
-  const hours=Math.floor(diff/3600000); 
-  const mins=Math.floor((diff/60000)%60); 
-  const lastTaken=localStorage.getItem("pillTakenDate"); 
-  const today=new Date().toDateString(); 
-  if(lastTaken===today){ 
-    pillTitle.textContent="✅ Schon genommi heute!"; 
-    pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`; 
-  } else if(now.getHours()>=20){ 
-    pillTitle.textContent="💊 Nimm die Pille ml!!!!"; 
-    pillCountdown.textContent="Jetzt ist Zeit 💖"; 
-  } else { 
-    pillTitle.textContent="Pille späti nehmi:"; 
-    pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`; 
-  } 
-}
-setInterval(updatePillCountdown,30000); updatePillCountdown();
-pillTakenBtn.addEventListener("click",()=>{ localStorage.setItem("pillTakenDate", new Date().toDateString()); updatePillCountdown(); });
-
-// --- Notes ---
-openNotesBtn.addEventListener("click",()=>{ notesPanel.style.display="flex"; });
-closeNotesBtn.addEventListener("click",()=>{ notesPanel.style.display="none"; });
-notesArea.addEventListener("input",()=>{ if(!currentUser) return; if(notesSaveTimer) clearTimeout(notesSaveTimer); notesSaveTimer=setTimeout(()=>{ db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}); },700); });
-
-// --- Countdown ---
-const targetDate=new Date("2025-11-20T18:00:00");
-function updateCountdown(){ const now=new Date(); const diff=targetDate-now; if(diff<=0){ document.getElementById("countdown").textContent="Endlich sehi 💕"; return;} const days=Math.floor(diff/(1000*60*60*24)); const hours=Math.floor((diff/(1000*60*60))%24); const mins=Math.floor((diff/(1000*60))%60); document.getElementById("countdown").textContent=`${days} Tage, ${hours} Std, ${mins} Min`; }
-setInterval(updateCountdown,1000); updateCountdown();
-
-// --- Reasons ---
-const reasons=["Du bist die erste Person, die ich immer bei mir will.","Du bist das erste, an das ich morgens denke.","Du hast so lange auf mich gewartet <3.","Du bist so süß und lieb.","Du machst mich einfach glücklich.","Du bist der Grund, warum ich lächle.","Ich liebe deine Art zu lachen.","Ich freue mich jedes Mal, dich zu sehen.","Du bist wunderschön.","Ich bin so stolz, dass du meins bist.","Deine Augen sind so wunderschön","Ich liebe dich, weil du mich verstehst.","Ich liebe dein Lächeln.","Du akzeptierst mich"];
-showReasonBtn.addEventListener("click",()=>{ letterText.textContent=reasons[Math.floor(Math.random()*reasons.length)]; });
-
-// --- Gallery ---
-const images=["https://i.imgur.com/m05eQGf.jpeg","https://i.imgur.com/rp80WsN.jpeg","https://i.imgur.com/BIxd6ix.jpeg"];
-function setRandomImage(){ randomImage.src=images[Math.floor(Math.random()*images.length)]; }
-changeImageBtn.addEventListener("click", setRandomImage); setRandomImage();
-randomImage.addEventListener("error", ()=>{ randomImage.src=images[0]; });
-
-// --- Yes/No button ---
-function moveNoButton(){ const wrap=document.querySelector(".yesno-wrap"); const padding=8; const btnWidth=noBtn.offsetWidth||100; const btnHeight=noBtn.offsetHeight||40; const maxX=wrap.clientWidth-btnWidth-padding; const maxY=wrap.clientHeight-btnHeight-padding; noBtn.style.left=Math.floor(Math.random()*maxX)+"px"; noBtn.style.top=Math.floor(Math.random()*maxY)+"px";}
-window.addEventListener("load", moveNoButton);
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("touchstart", moveNoButton);
+// Yes/No
+function moveNoButtonRandomly(){ const wrap=document.querySelector(".yesno-wrap"); const padding=8; const btnWidth=noBtn.offsetWidth||100; const btnHeight=noBtn.offsetHeight||40; const maxX=wrap.clientWidth-btnWidth-padding; const maxY=wrap.clientHeight-btnHeight-padding; const randX=Math.floor(Math.random()*maxX); const randY=Math.floor(Math.random()*maxY); noBtn.style.left=randX+"px"; noBtn.style.top=randY+"px";}
+window.addEventListener("load", moveNoButtonRandomly);
+noBtn.addEventListener("mouseenter", moveNoButtonRandomly);
+noBtn.addEventListener("touchstart", moveNoButtonRandomly);
 noBtn.addEventListener("click", e=>e.preventDefault());
 yesBtn.addEventListener("click",()=>alert("Yaaay 💖 Du hast bestimmt nicht versucht, den Nein-Button zu drücken..."));
 
-// --- Menu Panel ---
-menuButton.addEventListener("click",()=>menuPanel.classList.toggle("open"));
+// Menu panel
+menuButton.addEventListener("click",()=> menuPanel.classList.toggle("open"));
 
-// --- Auth State ---
+// Notes
+closeNotesBtn.addEventListener("click",()=> notesPanel.style.display="none");
+function autoSaveNotes(){ if(!currentUser) return; if(notesSaveTimer) clearTimeout(notesSaveTimer); notesSaveTimer=setTimeout(()=>{ db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}).catch(console.error); },700); }
+notesArea.addEventListener("input", autoSaveNotes);
+
+// Pill
+function updatePillCountdown(){ const now=new Date(); const pillTime=new Date(); pillTime.setHours(20,0,0,0); if(now>pillTime) pillTime.setDate(pillTime.getDate()+1); const diff=pillTime-now; const hours=Math.floor(diff/3600000); const mins=Math.floor((diff/60000)%60); const lastTaken=localStorage.getItem("pillTakenDate"); const today=new Date().toDateString(); if(lastTaken===today){ pillTitle.textContent="✅ Schon genommi heute!"; pillCountdown.textContent=`Nächste in ${hours}h ${mins}m 💗`; } else if(now.getHours()>=20){ pillTitle.textContent="💊 Nimm die Pille ml!!!!"; pillCountdown.textContent="Jetzt ist Zeit 💖"; } else{ pillTitle.textContent="Pille späti nehmi:"; pillCountdown.textContent=`Noch ${hours}h ${mins}m 💞`; } }
+setInterval(updatePillCountdown,30000); updatePillCountdown();
+pillTakenBtn.addEventListener("click",()=>{ localStorage.setItem("pillTakenDate", new Date().toDateString()); updatePillCountdown(); });
+
+// Auth
+function renderAuthControls(user){
+  authControls.innerHTML="";
+  if(user){
+    const div=document.createElement("div"); div.style.display="flex"; div.style.flexDirection="column"; div.style.gap="6px";
+    const who=document.createElement("div"); who.textContent=`Angemeldet: ${user.email}`; who.style.fontSize=".95rem";
+    const outBtn=document.createElement("button"); outBtn.textContent="Abmelden"; outBtn.addEventListener("click",()=>auth.signOut());
+    div.appendChild(who); div.appendChild(outBtn); authControls.appendChild(div);
+  }else{
+    const form=document.createElement("div"); form.style.display="flex"; form.style.flexDirection="column"; form.style.gap="6px";
+    const email=document.createElement("input"); email.type="email"; email.placeholder="E-Mail";
+    const pass=document.createElement("input"); pass.type="password"; pass.placeholder="Passwort";
+    const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+    const signUpBtn=document.createElement("button"); signUpBtn.textContent="Neu registrieren"; signUpBtn.style.background="#ffd4e3"; signUpBtn.style.color="#8a2b54";
+    signUpBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.createUserWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
+    form.appendChild(email); form.appendChild(pass); form.appendChild(signInBtn); form.appendChild(signUpBtn); authControls.appendChild(form);
+  }
+}
+
+// Live Leaderboard
+function setupLiveLeaderboard(){
+  db.collection("users").orderBy("love","desc").limit(5).onSnapshot(snapshot=>{
+    leaderboardList.innerHTML="";
+    snapshot.forEach(doc=>{
+      const data=doc.data();
+      const name=data.displayName||doc.id.slice(0,6);
+      const love=data.love||0;
+      const li=document.createElement("li");
+      li.textContent=`${name}: ${love} 💖`;
+      leaderboardList.appendChild(li);
+    });
+  }, err=>console.error(err));
+}
+
+// Live Purchases
+function setupLivePurchases(){
+  db.collection("purchases").orderBy("timestamp","asc").onSnapshot(snapshot=>{
+    purchasesList.innerHTML="";
+    snapshot.forEach(doc=>{
+      const data=doc.data();
+      const li=document.createElement("li");
+      li.textContent=`${data.user}: ${data.item}`;
+      purchasesList.appendChild(li);
+    });
+  }, err=>console.error(err));
+}
+
+// Love Shop
+function buyItem(cost,name){
+  if(!currentUser){alert("Bitte anmelden, um etwas zu kaufen."); return;}
+  if(lovePoints>=cost){
+    lovePoints-=cost; setLoveDisplay(); saveLoveToFirestore();
+    db.collection("purchases").add({user:currentUser.displayName||currentUser.email,item:name,timestamp:firebase.firestore.FieldValue.serverTimestamp()});
+    alert(`Du hast ${name} gekauft 💕`);
+  }else alert("Nicht genug Liebe 💖");
+}
+function openShop(){
+  const box=document.createElement("div");
+  box.style.position="fixed"; box.style.left="50%"; box.style.top="50%";
+  box.style.transform="translate(-50%,-50%)"; box.style.zIndex=13000; box.style.padding="14px"; box.style.borderRadius="12px";
+  box.style.background="#fff0f6"; box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
+  box.innerHTML=`<button id="b1">Kiss - 50 💖</button><button id="b2">Filmeabend - 100 💖</button><button id="b3">Kino Date - 500 💖</button>`;
+  document.body.appendChild(box);
+  box.addEventListener("click", (e)=>{ 
+    if(e.target.id==="b1"){ buyItem(50,"Kiss"); box.remove(); }
+    if(e.target.id==="b2"){ buyItem(100,"Filmeabend"); box.remove(); }
+    if(e.target.id==="b3"){ buyItem(500,"Kino Date"); box.remove(); }
+  });
+  setTimeout(()=>{ window.addEventListener("click", function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
+}
+
+// Auth state
 auth.onAuthStateChanged(async user=>{
   currentUser=user;
   renderAuthControls(user);
   if(user){
-    try{ const doc=await db.collection("users").doc(user.uid).get(); lovePoints=(doc.exists&&doc.data().love)?doc.data().love:0; setLoveDisplay(); }catch(e){lovePoints=0;}
-    setupLiveLeaderboard(); setupLivePurchases();
-    try{ const notesDoc=await db.collection("notes").doc(user.uid).get(); notesArea.value=(notesDoc.exists && notesDoc.data().text)?notesDoc.data().text:"";}catch(e){}
-  } else { lovePoints=0; setLoveDisplay(); leaderboardList.innerHTML="<li>Bitte anmelden 💕</li>"; purchaseHistoryList.innerHTML="<li>Bitte anmelden 💕</li>"; notesArea.value=""; }
+    // Load love points
+    try{ const doc=await db.collection("users").doc(user.uid).get(); lovePoints=(doc.exists && doc.data().love)?doc.data().love:0; setLoveDisplay(); }catch(e){console.error(e);}
+    setupLiveLeaderboard();
+    setupLivePurchases();
+    try{ const notesDoc=await db.collection("notes").doc(user.uid).get(); notesArea.value=(notesDoc.exists && notesDoc.data().text)?notesDoc.data().text:""; }catch(e){console.error(e);}
+  }else{ lovePoints=0; setLoveDisplay(); leaderboardList.innerHTML="<li>Bitte anmelden 💕</li>"; purchasesList.innerHTML="<li>Bitte anmelden 💕</li>"; notesArea.value="";}
 });
 
-window.addEventListener("beforeunload", ()=>{ if(currentUser) saveLove(); });
-renderAuthControls(null);
+window.addEventListener("beforeunload", ()=>{ if(currentUser) saveLoveToFirestore(); });
 </script>
 </body>
 </html>
