@@ -40,11 +40,14 @@
   .yesno-wrap{position:relative; min-height:100px}
   #yesBtn{z-index:2}
   #noBtn{position:absolute;z-index:3;cursor:default;}
+  .purchase-history{position:fixed;right:18px;top:18px;width:300px;max-height:70vh;overflow:auto;z-index:13000;display:flex;flex-direction:column;gap:6px}
+  .purchase-item{background:#fff0f6;border:2px solid #ffb6c1;border-radius:12px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
   @media (max-width:600px){
     .gallery img{width:88vw}
     #menuPanel{right:6%;width:88%}
     #menuButton{right:6%}
     #notesPanel{left:4%;right:4%;height:220px}
+    .purchase-history{right:4%;width:92%}
   }
 </style>
 </head>
@@ -98,10 +101,7 @@
       <div style="margin-top:8px"><button id="pillTakenBtn">Hab genommi 😇</button></div>
     </div>
     <div id="loveCounter" class="small">Liebe: 0 💖</div>
-    <div style="display:flex;gap:8px">
-      <button id="addHeartBtn" style="flex:1">Herz manuell +1</button>
-      <button id="openNotesBtn" style="flex:1">📝</button>
-    </div>
+    <button id="openNotesBtn" class="small">📝 Notizen</button>
     <button id="loveShopBtn" class="small">Love Shop 💕</button>
     <div id="authControls" style="margin-top:8px"></div>
     <div id="leaderboard" style="margin-top:6px">
@@ -109,6 +109,9 @@
       <ol id="leaderboardList" style="padding-left:16px;margin:0 0 8px 0"></ol>
     </div>
   </div>
+
+  <!-- Purchase history -->
+  <div class="purchase-history" id="purchaseHistory"></div>
 
   <!-- Notes panel -->
   <div id="notesPanel" aria-hidden="true">
@@ -137,7 +140,6 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
-  // UI refs
   const menuButton = document.getElementById("menuButton");
   const menuPanel = document.getElementById("menuPanel");
   const notesPanel = document.getElementById("notesPanel");
@@ -147,7 +149,6 @@
   const loveCounterEl = document.getElementById("loveCounter");
   const leaderboardList = document.getElementById("leaderboardList");
   const loveShopBtn = document.getElementById("loveShopBtn");
-  const addHeartBtn = document.getElementById("addHeartBtn");
   const pillTitle = document.getElementById("pillTitle");
   const pillCountdown = document.getElementById("pillCountdown");
   const pillTakenBtn = document.getElementById("pillTakenBtn");
@@ -156,10 +157,10 @@
   const changeImageBtn = document.getElementById("changeImageBtn");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
+  const purchaseHistory = document.getElementById("purchaseHistory");
 
   let currentUser = null;
   let lovePoints = 0;
-  let heartIntervalId = null;
   let leaderboardUnsub = null;
   let notesSaveTimer = null;
 
@@ -179,9 +180,7 @@
       const form=document.createElement("div"); form.style.display="flex"; form.style.flexDirection="column"; form.style.gap="6px";
       const email=document.createElement("input"); email.type="email"; email.placeholder="E-Mail";
       const pass=document.createElement("input"); pass.type="password"; pass.placeholder="Passwort";
-      const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;}
-        auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message));
-      });
+      const signInBtn=document.createElement("button"); signInBtn.textContent="Anmelden"; signInBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.signInWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
       const signUpBtn=document.createElement("button"); signUpBtn.textContent="Neu registrieren"; signUpBtn.style.background="#ffd4e3"; signUpBtn.style.color="#8a2b54";
       signUpBtn.addEventListener("click",()=>{ const e=email.value.trim(),p=pass.value; if(!e||!p){alert("Bitte E-Mail und Passwort angeben"); return;} auth.createUserWithEmailAndPassword(e,p).catch(err=>alert("Fehler: "+err.message)); });
       form.appendChild(email); form.appendChild(pass); form.appendChild(signInBtn); form.appendChild(signUpBtn); authControls.appendChild(form);
@@ -199,99 +198,48 @@
     } else { lovePoints=0; setLoveDisplay(); if(leaderboardUnsub){leaderboardUnsub(); leaderboardUnsub=null;} leaderboardList.innerHTML="<li>Bitte anmelden 💕</li>"; notesArea.value="";}
   });
 
-  // Hearts
-  function createHeartOnce(){
-    const heart=document.createElement("div"); heart.className="heart"; heart.textContent="💖"; const size=Math.floor(Math.random()*28)+18; heart.style.fontSize=size+"px";
-    const left=Math.random()*(window.innerWidth-80)+20; heart.style.left=left+"px"; heart.style.top="-40px"; heart.style.cursor="pointer"; document.body.appendChild(heart);
-    heart.addEventListener("click", e=>{ e.stopPropagation(); if(currentUser){ lovePoints+=1; setLoveDisplay(); debounceSaveLove(); heart.remove(); } else alert("Bitte zuerst anmelden, damit Punkte gespeichert werden."); });
-    const endY=window.innerHeight+100; const duration=Math.random()*3500+3000; let start=null;
-    function animate(ts){ if(!start) start=ts; const progress=(ts-start)/duration; const y=Math.min(progress*endY,endY); heart.style.transform=`translateY(${y}px) rotate(${progress*360}deg)`; heart.style.opacity=`${1-progress}`; if(progress<1) requestAnimationFrame(animate); else heart.remove();}
-    requestAnimationFrame(animate);
-  }
-  function startHeartRain(){ if(heartIntervalId) return; createHeartOnce(); heartIntervalId=setInterval(createHeartOnce,900);}
-  window.addEventListener("load",()=>startHeartRain());
-  addHeartBtn.addEventListener("click", async ()=>{ if(!currentUser){ alert("Bitte anmelden, um Punkte zu speichern."); return; } lovePoints+=1; setLoveDisplay(); await saveLoveToFirestore(); });
-
   // Leaderboard
   function updateLeaderboardRealtime(){
     try{return db.collection("users").where("love",">=",0).orderBy("love","desc").limit(5).onSnapshot(snapshot=>{
-      leaderboardList.innerHTML=""; snapshot.forEach(doc=>{ const data=doc.data(); const name=doc.id=== (currentUser && currentUser.uid)?"Du":(data.displayName||doc.id.slice(0,6)); const li=document.createElement("li"); li.textContent=`${name}: ${data.love||0} 💖`; leaderboardList.appendChild(li); }); if(leaderboardList.children.length===0) leaderboardList.innerHTML="<li>noch keiner</li>";});}catch(e){console.error(e); leaderboardList.innerHTML="<li>Fehler</li>";}
+      leaderboardList.innerHTML="";
+      snapshot.forEach(doc=>{ const data=doc.data(); const name=doc.id=== (currentUser && currentUser.uid)?"Du":(data.displayName||doc.id.slice(0,6)); const li=document.createElement("li"); li.textContent=`${name}: ${data.love||0} 💖`; leaderboardList.appendChild(li); });
+      if(leaderboardList.children.length===0) leaderboardList.innerHTML="<li>noch keiner</li>";
+    });}catch(e){console.error(e); leaderboardList.innerHTML="<li>Fehler</li>";}
   }
 
   // Notes
   notesArea.addEventListener("input",()=>{ if(!currentUser) return; if(notesSaveTimer) clearTimeout(notesSaveTimer); notesSaveTimer=setTimeout(()=>{ db.collection("notes").doc(currentUser.uid).set({text:notesArea.value}).catch(console.error); },700); });
 
-  // Love Shop & Purchases
-  const purchasedPanel = document.createElement("div");
-  purchasedPanel.style.position = "fixed";
-  purchasedPanel.style.right = "16px";
-  purchasedPanel.style.top = "90px";
-  purchasedPanel.style.width = "220px";
-  purchasedPanel.style.background = "#fff0f6";
-  purchasedPanel.style.border = "2px solid #ffb6c1";
-  purchasedPanel.style.borderRadius = "12px";
-  purchasedPanel.style.padding = "10px";
-  purchasedPanel.style.zIndex = 15000;
-  purchasedPanel.style.boxShadow = "0 6px 20px rgba(0,0,0,0.1)";
-  purchasedPanel.innerHTML = "<h4 style='margin:4px 0'>Gekauft 💖</h4>";
-  document.body.appendChild(purchasedPanel);
-
-  async function recordPurchase(userName, itemName){
-    if(!currentUser) return;
-    await db.collection("purchases").add({
-      user: userName,
-      item: itemName,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  }
-
+  // Love Shop
   function buyItem(cost,name){
     if(!currentUser){alert("Bitte anmelden, um etwas zu kaufen."); return;}
     if(lovePoints>=cost){
-      lovePoints -= cost;
+      lovePoints-=cost;
       setLoveDisplay();
       debounceSaveLove();
       alert(`Du hast ${name} gekauft 💕`);
-      recordPurchase(currentUser.email, name);
+      showPurchase(name,currentUser.email);
     } else alert("Nicht genug Liebe 💖");
   }
 
-  db.collection("purchases").orderBy("timestamp", "asc").onSnapshot(snapshot=>{
-    purchasedPanel.querySelectorAll(".purchase").forEach(e=>e.remove());
-    snapshot.forEach(doc=>{
-      const data = doc.data();
-      const div = document.createElement("div");
-      div.className = "purchase";
-      div.style.display = "flex";
-      div.style.justifyContent = "space-between";
-      div.style.alignItems = "center";
-      div.style.padding = "4px 0";
-      div.style.borderBottom = "1px solid #ffdfe8";
-      div.innerHTML = `<span>${data.user}: ${data.item}</span>`;
-      const btn = document.createElement("button");
-      btn.textContent = "X";
-      btn.style.background = "none";
-      btn.style.border = "none";
-      btn.style.color = "#d63384";
-      btn.style.cursor = "pointer";
-      btn.addEventListener("click", ()=> doc.ref.delete());
-      div.appendChild(btn);
-      purchasedPanel.appendChild(div);
-    });
-  });
+  function showPurchase(item,user){
+    const div=document.createElement("div");
+    div.className="purchase-item";
+    div.textContent=`${user} hat ${item} gekauft 💖`;
+    div.addEventListener("click",()=>div.remove());
+    purchaseHistory.prepend(div);
+  }
 
   loveShopBtn.addEventListener("click",()=>{
-    const box=document.createElement("div");
-    box.style.position="fixed"; box.style.left="50%"; box.style.top="50%";
-    box.style.transform="translate(-50%,-50%)"; box.style.zIndex=13000;
-    box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6";
+    const box=document.createElement("div"); box.style.position="fixed"; box.style.left="50%"; box.style.top="50%"; box.style.transform="translate(-50%,-50%)";
+    box.style.zIndex=13000; box.style.padding="14px"; box.style.borderRadius="12px"; box.style.background="#fff0f6";
     box.style.border="2px solid #ffb6c1"; box.style.display="flex"; box.style.flexDirection="column"; box.style.gap="8px";
-    box.innerHTML=`<button id="b1">Kiss - 10 💖</button><button id="b2">Filmeabend - 25 💖</button><button id="b3">Kino Date - 50 💖</button>`;
+    box.innerHTML=`<button id="b1">Kiss - 50 💖</button><button id="b2">Filmeabend - 100 💖</button><button id="b3">Kino Date - 500 💖</button>`;
     document.body.appendChild(box);
     box.addEventListener("click", (e)=>{
-      if(e.target.id==="b1"){ buyItem(10,"Kiss"); box.remove(); }
-      if(e.target.id==="b2"){ buyItem(25,"Filmeabend"); box.remove(); }
-      if(e.target.id==="b3"){ buyItem(50,"Kino Date"); box.remove(); }
+      if(e.target.id==="b1"){ buyItem(50,"Kiss"); box.remove(); }
+      if(e.target.id==="b2"){ buyItem(100,"Filmeabend"); box.remove(); }
+      if(e.target.id==="b3"){ buyItem(500,"Kino Date"); box.remove(); }
     });
     setTimeout(()=>{ window.addEventListener("click", function closer(ev){ if(!box.contains(ev.target)){ box.remove(); window.removeEventListener("click",closer); } }); },100);
   });
